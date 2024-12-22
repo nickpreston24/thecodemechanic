@@ -1,0 +1,51 @@
+@page
+@model thecodemechanic.Pages.Blog.Index
+
+@{
+    string[] fake_posts = ["'100 yds to outhouse - Willie Maekit', Betty Woant", "Mopey Dick", "Grape Expectations"];
+}
+
+<div class="flex flex-col items-center justify-center gap-2" x-data="setup_blog()">
+
+    <hero>
+        <h1 x-show="views.posts.show">The following are my posts:</h1>
+
+        @* <hydro-alert message="Hello there!"></hydro-alert> *@
+        <button
+            x-text="views.posts.button_text"
+            x-on:click="views.posts.toggle()"
+            class="btn btn-primary">
+        </button>
+
+        <template x-if="views.posts.show">
+            <div>
+                <ul>
+                    @foreach (var title in fake_posts)
+                    {
+                        <li>@title</li>
+                    }
+                </ul>
+            </div>
+        </template>
+
+
+    </hero>
+
+</div>
+<script>
+    function setup_blog() {
+        return {
+            views: {
+                posts: {
+                    show: false,
+                    get button_text() {
+                        return this.show ? "Hide" : "Show Posts"
+                    },
+                    toggle() {
+                        this.show = !this.show
+                    }
+                }
+            }
+        }
+    }
+</script>
