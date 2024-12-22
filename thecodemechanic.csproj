@@ -22,7 +22,6 @@
 
     <ItemGroup>
         <PackageReference Include="CodeMechanic.Bash" Version="1.0.1"/>
-        <PackageReference Include="CodeMechanic.DataDictionary" Version="1.0.0"/>
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.4"/>
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.3"/>
         <PackageReference Include="CodeMechanic.FileSystem" Version="2.0.5"/>
