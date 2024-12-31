@@ -1,0 +1,20 @@
+@page
+@model BlogPosts
+
+@{
+}
+
+<div id="blog_posts">
+
+    <div
+        hx-get
+        hx-page-handler="AllPosts"
+    >
+        <ul>
+            @* @foreach (var title in fake_posts) *@
+            @* { *@
+            @*     <li>@title</li> *@
+            @* } *@
+        </ul>
+    </div>
+</div>
