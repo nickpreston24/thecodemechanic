@@ -36,6 +36,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\Sandbox\Components\" />
       <Folder Include="Pages\Storybook\Components\" />
     </ItemGroup>
 

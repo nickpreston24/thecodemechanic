@@ -1,0 +1,13 @@
+@model HydroToolTip
+
+@if (@Model.load_as_tooltip)
+{
+    <div class="tooltip" data-tip="@Model.text">
+        @Model.Slot()
+    </div>
+}
+
+@if (@Model.load_slot_only)
+{
+    @Model.Slot()
+}

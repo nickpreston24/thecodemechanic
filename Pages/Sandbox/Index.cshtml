@@ -1,7 +1,7 @@
 @page
-@model thecodemechanic.Pages.Storybook.Index
+@model thecodemechanic.Pages.Sandbox.Index
 
-<section x-data="setup_storybook()">
+<section x-data="setup_sandbox()">
 
     <dashboard>
         <slot name="left">
@@ -20,33 +20,27 @@
                 </template>
             </ul>
         </slot>
-
-        <stack>
-            <div x-show="views.construction.show">
-                <partial name="Shared/_UnderConstruction"></partial>
-            </div>
-            <div x-show="views.tooltip.show">
-                <tooltip text="hi there">
-                    <button class="btn btn-primary">
-                        This is a tooltip test
-                    </button>
-                </tooltip>
-            </div>
-        </stack>
-
+        <div x-show="views.foo.show">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque distinctio dolor
+                dolores doloribus dolorum ex
+                fugit natus quae quisquam ratione. Accusantium dolorum eos molestiae neque nobis ratione repellat
+                similique
+                veniam!</p>
+        </div>
+        <div x-show="views.bar.show">bar</div>
     </dashboard>
 </section>
 <script>
-    function setup_storybook() {
+    function setup_sandbox() {
         return {
             lorem: "ipsum",
             views: {
-                tooltip: {
+                foo: {
                     show: true,
-                    title: "kitty"
+                    title: "foo"
                 },
-                construction: {
-                    show: false,
+                bar: {
+                    show: true,
                     title: "bar"
                 }
             },
