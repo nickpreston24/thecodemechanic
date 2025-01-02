@@ -1,0 +1,57 @@
+@page
+@model thecodemechanic.Pages.Storybook.Index
+
+<section x-data="setup_storybook()">
+
+    <dashboard>
+        <slot name="left">
+            <ul class="menu menu-vertical bg-base-200 rounded-box">
+                <template x-for="[key,view] in Object.entries(views)">
+                    <li x-on:click="toggle_view(key)">
+                        <a :class="view.show ? 'active': ''">
+                            <div :data-tip="view.tooltip">
+                                <span class="text-lg font-bold">
+                                    <h2 x-text="view.title"
+                                        :class="!view.show ? ' text-neutral-500/80' : ''"></h2>
+                                </span>
+                            </div>
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </slot>
+        <div x-show="views.foo.show">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque distinctio dolor
+                dolores doloribus dolorum ex
+                fugit natus quae quisquam ratione. Accusantium dolorum eos molestiae neque nobis ratione repellat
+                similique
+                veniam!</p>
+        </div>
+        <div x-show="views.bar.show">bar</div>
+    </dashboard>
+</section>
+<script>
+    function setup_storybook() {
+        return {
+            lorem: "ipsum",
+            views: {
+                foo: {
+                    show: true,
+                    title: "foo"
+                },
+                bar: {
+                    show: true,
+                    title: "bar"
+                }
+            },
+
+            toggle_view(name) {
+                let matching = this.views[name];
+                matching.show = !matching.show;
+                for (const [key, value] of Object.entries(this.views).filter(([key, value]) => key !== name)) {
+                    value.show = false;
+                }
+            }
+        }
+    }
+</script>

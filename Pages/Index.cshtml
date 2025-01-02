@@ -4,17 +4,20 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <modal btn-text="Foo" title="Welcome">
-        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    </modal>
+<div x-data="setup_main()" class="text-center">
+    <hero>
 
-    <dashboard>
-        foo
-    </dashboard>
+        <h1 class="text-3xl">Welcome to my website!</h1>
+
+        <modal btn-text="not working!" title="Welcome">
+            <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.
+            </p>
+        </modal>
+    </hero>
 </div>
 
+<script>
+    function setup_main() {
 
-@* 
-   
-   *@
+    }
+</script>

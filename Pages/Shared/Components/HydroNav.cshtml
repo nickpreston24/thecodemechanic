@@ -1,0 +1,32 @@
+@model HydroNav
+
+@{
+    bool has_links = @Model.links.Count > 0;
+}
+
+<div class="navbar bg-base-100  bg-primary text-primary-content">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl">@Model.Title</a>
+    </div>
+    <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+
+            @if (has_links)
+            {
+                @foreach (var link in @Model.links)
+                {
+                    <li>
+                        <a href="@link.url">
+                            @* <box-icon name="@link.icon" :color="selected_box_icon_color"></box-icon> *@
+                            @link.text
+                        </a>
+                    </li>
+                }
+            }
+            @if (!has_links)
+            {
+                @Model.Slot()
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+@model HydroDashboard
+
+@{
+    string dashboard_left_id = $"{Model.Name}_dashboard_left";
+    string dashboard_id = $"{Model.Name}_dashboard";
+
+    var slot = @Model.Slot();
+    var left = @Model.Slot("left");
+
+    // var menu_items = @Model.items;
+}
+
+<section class="grid grid-cols-4 h-screen bg-neutral-100 text-primary">
+
+    <div id="@dashboard_left_id" class="flex flex-col gap-2">
+
+        @* @if (menu_items.Count > 0) *@
+        @* { *@
+        @*     @foreach (var item in menu_items) *@
+        @*     { *@
+        @*         <mi item="@item"/> *@
+        @*     } *@
+        @* } *@
+
+        @left
+    </div>
+
+    <div id="@dashboard_id" class="border-2 col-span-3">
+        @slot
+    </div>
+</section>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using thecodemechanic.Pages.Shared.Components
+<!DOCTYPE html>
 <html data-theme="dracula" lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -17,9 +18,10 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- ALPINEJS -->
-
     <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/collapse@@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/persist@@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/focus@@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/morph@@3.x.x/dist/cdn.min.js"></script>
 
     <script src="~/lib/alpinejs/cdn.min.js" defer></script>
 
@@ -31,7 +33,13 @@
 <body x-data="setup_layout()">
 
 <header>
-    <navbar></navbar>
+    <nav links="@(new List<NavbarLink>()
+                {
+                    new NavbarLink("Home", "/"),
+                    new NavbarLink("Sandbox", "Sandbox"),
+                    new NavbarLink("Storybook", "Storybook"),
+                })">
+    </nav>
 </header>
 
 <div class="min-h-screen">
