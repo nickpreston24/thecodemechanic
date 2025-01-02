@@ -9,8 +9,12 @@
     <title>@ViewData["Title"] - thecodemechanic</title>
 
     <!-- TAILWIND -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css"/>
+    @* <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css"/> *@
+    @* <script src="https://cdn.tailwindcss.com"></script> *@
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/themes.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTMX -->
 
@@ -33,14 +37,14 @@
 <body x-data="setup_layout()">
 
 <header>
-    <nav links="@(new List<NavbarLink>()
-                {
-                    new NavbarLink("Home", "/"),
-                    new NavbarLink("Sandbox", "Sandbox"),
-                    new NavbarLink("Storybook", "Storybook"),
-                    new NavbarLink("Blog", "Blog"),
-                })">
-    </nav>
+    <navbar links="@(new List<NavbarLink>()
+                   {
+                       new NavbarLink("Home", "/"),
+                       // new NavbarLink("Sandbox", "Sandbox"),
+                       // new NavbarLink("Storybook", "Storybook"),
+                       new NavbarLink("Blog", "Blog"),
+                   })">
+    </navbar>
 </header>
 
 <div class="min-h-screen">
@@ -49,11 +53,7 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="h-24">
-        &copy; 2024 - thecodemechanic - <a asp-area="" asp-page="/Privacy">Privacy</a>
-    </div>
-</footer>
+<partial name="_Footer"/>
 
 @await RenderSectionAsync("Scripts", required: false)
 <script>

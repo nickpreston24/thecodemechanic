@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace thecodemechanic.Pages.Shared.Components;
 
-[HtmlTargetElement("nav")]
+[HtmlTargetElement("navbar")]
 public class HydroNav : HydroView
 {
     public string Title { get; set; } = nameof(thecodemechanic);
