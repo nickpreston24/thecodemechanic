@@ -14,15 +14,18 @@
 
     <div id="@dashboard_left_id" class="flex flex-col gap-2">
 
-        @* @if (menu_items.Count > 0) *@
-        @* { *@
-        @*     @foreach (var item in menu_items) *@
-        @*     { *@
-        @*         <mi item="@item"/> *@
-        @*     } *@
-        @* } *@
+        <stack>
 
-        @left
+            @* @if (menu_items.Count > 0) *@
+            @* { *@
+            @*     @foreach (var item in menu_items) *@
+            @*     { *@
+            @*         <mi item="@item"/> *@
+            @*     } *@
+            @* } *@
+
+            @left
+        </stack>
     </div>
 
     <div id="@dashboard_id" class="border-2 col-span-3">

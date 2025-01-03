@@ -12,6 +12,7 @@
                             <div :data-tip="view.tooltip">
                                 <span class="text-lg font-bold">
                                     <h2 x-text="view.title"
+                                        class="w-64"
                                         :class="!view.show ? ' text-neutral-500/80' : ''"></h2>
                                 </span>
                             </div>
@@ -20,7 +21,6 @@
                 </template>
             </ul>
         </slot>
-
         <stack>
             <div x-show="views.construction.show">
                 <partial name="Shared/_UnderConstruction"></partial>
@@ -33,7 +33,6 @@
                 </tooltip>
             </div>
         </stack>
-
     </dashboard>
 </section>
 <script>

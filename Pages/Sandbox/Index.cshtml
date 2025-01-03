@@ -2,7 +2,6 @@
 @model thecodemechanic.Pages.Sandbox.Index
 
 <section x-data="setup_sandbox()">
-
     <dashboard>
         <slot name="left">
             <ul class="menu menu-vertical bg-base-200 rounded-box">
@@ -12,6 +11,7 @@
                             <div :data-tip="view.tooltip">
                                 <span class="text-lg font-bold">
                                     <h2 x-text="view.title"
+                                        class="w-64"
                                         :class="!view.show ? ' text-neutral-500/80' : ''"></h2>
                                 </span>
                             </div>
@@ -20,20 +20,13 @@
                 </template>
             </ul>
         </slot>
-        <div x-show="views.foo.show">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque distinctio dolor
-                dolores doloribus dolorum ex
-                fugit natus quae quisquam ratione. Accusantium dolorum eos molestiae neque nobis ratione repellat
-                similique
-                veniam!</p>
-        </div>
-        <div x-show="views.bar.show">bar</div>
+        <partial name="_Lorem"></partial>
+        <partial name="_Bar"></partial>
     </dashboard>
 </section>
 <script>
     function setup_sandbox() {
         return {
-            lorem: "ipsum",
             views: {
                 foo: {
                     show: true,

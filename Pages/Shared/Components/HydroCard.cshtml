@@ -1,0 +1,14 @@
+@model HydroCard
+
+<div class="card bg-base-200 w-@Model.width shadow-xl">
+    @Model.Slot("image")
+    <div class="card-body">
+        <h2 class="card-title text-secondary">
+            @Model.title
+        </h2>
+        @Model.Slot()
+        <div class="card-actions justify-end">
+            @Model.Slot("actions")
+        </div>
+    </div>
+</div>

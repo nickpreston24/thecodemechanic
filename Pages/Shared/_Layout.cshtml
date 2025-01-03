@@ -7,6 +7,14 @@
     <script defer src="~/hydro/hydro.js" asp-append-version="true"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - thecodemechanic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+          rel="stylesheet">
+
+    <link
+        href="~/css/site.css"
+        rel="stylesheet" type="text/css"/>
 
     <!-- TAILWIND -->
     @* <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css"/> *@
@@ -34,7 +42,7 @@
 
 </head>
 
-<body x-data="setup_layout()">
+<body class="anonymous-pro-regular" x-data="setup_layout()">
 
 <header>
     <navbar links="@(new List<NavbarLink>()
