@@ -1,0 +1,55 @@
+<hero>
+    <stack>
+
+        <h1 class="text-3xl" x-show="views.posts.show">Latest Post:</h1>
+
+        @* <hydro-alert message="Hello there!"></hydro-alert> *@
+        @* <button *@
+        @*     x-text="views.posts.button_text" *@
+        @*     x-on:click="views.posts.toggle()" *@
+        @*     class="btn btn-primary"> *@
+        @* </button> *@
+
+        <div x-show="views.posts.show"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-90"
+        >
+
+            <div id="blog_posts">
+
+                <blockquote class="twitter-tweet">
+                    <p lang="en" dir="ltr">(any JS) Client + .NET API + PostrgreSQL on
+                        <a
+                            href="https://t.co/SoR86Jak8I">https://t.co/SoR86Jak8I</a>.<br>- Deploy in One
+                        Click
+                        from
+                        GitHub.<br>- Supports Dockerfiles &amp; Nix.tomls.<br>- No &quot;credits&quot; BS.
+                        Pay
+                        for
+                        what
+                        you USE (db + traffic) <a href="https://t.co/kxlbFBqhPK">https://t.co/kxlbFBqhPK</a>
+                    </p>&mdash;
+                    Nicholas Preston (@@Mike_Preston17)
+                    <a
+                        href="https://twitter.com/Mike_Preston17/status/1875477396385927174?ref_src=twsrc%5Etfw">January
+                        4, 2025</a></blockquote>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
+                @* Todo: finish this *@
+                @* <blog-posts> *@
+                @*      *@
+                @* </blog-posts> *@
+            </div>
+        </div>
+
+
+    </stack>
+
+
+</hero>

@@ -2,41 +2,38 @@
 @model thecodemechanic.Pages.Blog.Index
 
 @{
-    // string[] fake_posts = ["'100 yds to outhouse - Willie Maekit', Betty Woant", "Mopey Dick", "Grape Expectations"];
 }
 
-<div class="flex flex-col items-center justify-center gap-2" x-data="setup_blog()">
+<section class="border-2 border-success">
 
-    <hero>
-        <h1 x-show="views.posts.show">The following are my posts:</h1>
+    <partial name="Components/_BlogAnimatedHeader"></partial>
+    <div class="grid grid-cols-3" x-data="setup_blog()">
 
-        @* <hydro-alert message="Hello there!"></hydro-alert> *@
-        <button
-            x-text="views.posts.button_text"
-            x-on:click="views.posts.toggle()"
-            class="btn btn-primary">
-        </button>
+        @* <div class="col-span-2 border-2 border-success"> *@
+        @*     <hero> *@
+        @*         Latest post *@
+        @*     </hero> *@
+        @* </div> *@
 
-        <template x-if="views.posts.show">
+        <div class="col-span-2 border-2 border-success">
+            <partial name="Components/_TwitterPostSample"></partial>
+        </div>
+        <div id="left" class="col-span-1     border-2 border-success">
+            <hero>Blog POSTS coming soon!</hero>
+        </div>
 
-            <div id="blog_posts">
+        <div id="right" class="col-span-3   ">
+            <twitter-timeline></twitter-timeline>
+        </div>
 
-                <blog-posts>
-                    
-                </blog-posts>
-            </div>
-        </template>
-
-
-    </hero>
-
-</div>
+    </div>
+</section>
 <script>
     function setup_blog() {
         return {
             views: {
                 posts: {
-                    show: false,
+                    show: true,
                     get button_text() {
                         return this.show ? "Hide" : "Show Posts"
                     },
