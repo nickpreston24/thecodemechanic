@@ -17,8 +17,6 @@
         rel="stylesheet" type="text/css"/>
 
     <!-- TAILWIND -->
-    @* <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.22/dist/full.min.css" rel="stylesheet" type="text/css"/> *@
-    @* <script src="https://cdn.tailwindcss.com"></script> *@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -48,9 +46,9 @@
     <navbar links="@(new List<NavbarLink>()
                    {
                        new NavbarLink("Home", "/"),
+                       new NavbarLink("Blog", "Blog"),
                        // new NavbarLink("Sandbox", "Sandbox"),
                        // new NavbarLink("Storybook", "Storybook"),
-                       new NavbarLink("Blog", "Blog"),
                    })">
     </navbar>
 </header>

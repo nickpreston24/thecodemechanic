@@ -4,7 +4,7 @@
     bool has_links = @Model.links.Count > 0;
 }
 
-<div class="navbar bg-base-100  bg-primary text-primary-content">
+<div class="navbar bg-base-100 bg-primary text-primary-content">
     <div class="flex-1">
         <a class="btn btn-ghost text-xl">@Model.Title</a>
     </div>
@@ -15,7 +15,7 @@
             {
                 @foreach (var link in @Model.links)
                 {
-                    <li>
+                    <li class="text-xl">
                         <a href="@link.url">
                             @* <box-icon name="@link.icon" :color="selected_box_icon_color"></box-icon> *@
                             @link.text
