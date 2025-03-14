@@ -88,6 +88,7 @@ internal class Program
             .AddSingleton(arguments)
             .AddSingleton<Logger>(logger)
             .AddSingleton<Application>()
+            .AddScoped<RegexExtractionGenerator>()
             .BuildServiceProvider();
 
         return serviceProvider;
