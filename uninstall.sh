@@ -1,1 +1,1 @@
-dotnet tool uninstall -g cm
+dotnet tool uninstall -g thecodemechanic
