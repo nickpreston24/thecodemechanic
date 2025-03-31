@@ -1,0 +1,40 @@
+﻿@page
+@model thecodemechanic.Pages.Docs.Search
+
+@{
+    // Layoutk = null;
+}
+
+<section>
+
+    <span>@Model.search</span>
+
+
+    <h1 class="title has-text-centered">
+        Fuzzy Search of all .md docs on Drive
+    </h1>
+
+
+    <div class="container"
+         @* hx-get *@
+         @* hx-page="Search" *@
+         @* hx-vars="{search: 'foo'}" *@
+         @* hx-trigger="click, once" *@
+         @* hx-swap="innerHtml settle:1s" *@
+    >
+        @await Html.PartialAsync("_Documents")
+    </div>
+
+</section>
+
+
+<style type="text/css">
+    #fade-me-in.htmx-settling {
+        opacity: 0;
+    }
+
+    #fade-me-in {
+        opacity: 1;
+        transition: opacity 1s ease-out;
+    }
+</style>

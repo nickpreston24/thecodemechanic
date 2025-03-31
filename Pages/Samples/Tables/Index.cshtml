@@ -1,0 +1,21 @@
+﻿@page "{id:int?}"
+@model thecodemechanic.Pages.Samples.Tables.Index
+
+<div class="section">
+    <h1 class="title">Editable Table - Excelsior!</h1>
+    <table class="table is-fullwidth is-striped is-hoverable">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var person in Model.People)
+        {
+            @await Html.PartialAsync("_Row", person)
+        }
+        </tbody>
+    </table>
+</div>
