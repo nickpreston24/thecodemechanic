@@ -14,7 +14,7 @@
         <tbody>
         @foreach (var person in Model.People)
         {
-            @await Html.PartialAsync("_Row", person)
+            <partial name="_Row" model="@person"></partial>
         }
         </tbody>
     </table>
