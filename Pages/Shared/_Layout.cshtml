@@ -6,7 +6,7 @@
     <meta name="hydro-config"/>
     <script defer src="~/hydro/hydro.js" asp-append-version="true"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
+
     <title>@ViewData["Title"] - thecodemechanic</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,8 +49,9 @@
                    {
                        new NavbarLink("Home", "/"),
                        new NavbarLink("Blog", "Blog"),
-                       // new NavbarLink("Sandbox", "Sandbox"),
-                       // new NavbarLink("Storybook", "Storybook"),
+                       new NavbarLink("Sandbox", "Sandbox"),
+                       new NavbarLink("Storybook", "Storybook"),
+                       new NavbarLink("Samples", "/Samples/Tables"),
                    })">
     </navbar>
 </header>
