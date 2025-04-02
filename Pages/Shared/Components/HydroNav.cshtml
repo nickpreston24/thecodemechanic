@@ -20,12 +20,35 @@
                 {
                     @foreach (var link in @Model.links)
                     {
-                        <li class="text-xl">
-                            <a href="@link.url">
-                                @* <box-icon name="@link.icon" :color="selected_box_icon_color"></box-icon> *@
-                                @link.text
-                            </a>
-                        </li>
+                        if (link.children.Count == 0)
+                        {
+                            <li class="text-xl">
+                                <a href="@link.url">
+                                    @* <box-icon name="@link.icon" :color="selected_box_icon_color"></box-icon> *@
+                                    @link.text
+                                </a>
+                            </li>
+                        }
+                        else if (link.children.Count > 0)
+                        {
+                            @* <div class="dropdown"> *@
+                            @*     <div tabindex="0" role="button" class="btn btn-ghost btn-circle"> *@
+                            @* *@
+                            @*     </div> *@
+                            @*     <ul tabindex="1" *@
+                            @*         class="menu menu-md dropdown-content text-primary mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"> *@
+                            @*         @foreach (var child_link in link.children) *@
+                            @*         { *@
+                            @*             <li class="text-xl"> *@
+                            @*                 <a href="@child_link.url"> *@
+                            @*                     $1$ <box-icon name="@link.icon" :color="selected_box_icon_color"></box-icon> #1# *@
+                            @*                     @child_link.text *@
+                            @*                 </a> *@
+                            @*             </li> *@
+                            @*         } *@
+                            @*     </ul> *@
+                            @* </div> *@
+                        }
                     }
                 }
                 @if (!has_links)

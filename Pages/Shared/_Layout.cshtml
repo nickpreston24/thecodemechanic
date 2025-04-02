@@ -1,4 +1,5 @@
-﻿@using thecodemechanic.Pages.Shared.Components
+﻿@using CodeMechanic.Types
+@using thecodemechanic.Pages.Shared.Components
 <!DOCTYPE html>
 <html data-theme="dracula" lang="en">
 <head>
@@ -51,7 +52,12 @@
                        new NavbarLink("Blog", "/Blog"),
                        new NavbarLink("Sandbox", "/Sandbox"),
                        new NavbarLink("Storybook", "/Storybook"),
-                       new NavbarLink("Samples", "/Samples/Tables"),
+                       new NavbarLink("Samples", "").With(l =>
+                       {
+                           // todo: make this recursively render.
+                           l.children.Add(new NavbarLink("Tables", "/Samples/Tables"));
+                           l.children.Add(new NavbarLink("JustDoIt", "/Samples/JustDoIt"));
+                       }),
                    })">
     </navbar>
 </header>

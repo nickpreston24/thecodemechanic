@@ -1,0 +1,25 @@
+﻿@model justdoit.Todo
+@{
+    string type_name = typeof(justdoit.Todo).Name.ToLower();
+    var id = $"{type_name}-{Model.Id}";
+}
+
+<tr id="@id">
+    <td>
+        @Model.Content
+    </td>
+    <td>
+        @Model.Id
+    </td>
+    <td class="has-text-right">
+        <button class="button is-primary"
+                hx-get="@Url.Page("Index", "Edit", new { Model.Id })"
+                hx-swap="outerHTML"
+                hx-target="closest tr">
+            <span class="icon">
+                <i class="fa fa-edit"></i>
+            </span>
+            <span>Edit</span>
+        </button>
+    </td>
+</tr>
