@@ -11,6 +11,9 @@
     <td>
         @Model.Id
     </td>
+    <td>
+        @Model.Priority
+    </td>
     <td class="has-text-right">
         <button class="button is-primary"
                 hx-get="@Url.Page("Index", "Edit", new { Model.Id })"

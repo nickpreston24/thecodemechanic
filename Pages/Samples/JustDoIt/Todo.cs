@@ -2,7 +2,9 @@ namespace justdoit;
 
 public class Todo
 {
-    public Todo() { }
+    public Todo()
+    {
+    }
 
     public Todo(int id, string content)
     {
@@ -12,4 +14,5 @@ public class Todo
 
     public int Id { get; set; }
     public string Content { get; set; }
+    public int Priority { get; set; } = 4;
 }

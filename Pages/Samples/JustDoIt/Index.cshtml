@@ -1,13 +1,21 @@
 ﻿@page "{id:int?}"
+@using System.Collections.Immutable
+@using justdoit
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model thecodemechanic.Pages.Samples.JustDoIt.Index
+
+@{
+}
 
 <div data-theme="dracula" class="section text-xl">
     <h1 class="title">Editable Table - Excelsior!</h1>
     <table class="table is-fullwidth is-striped is-hoverable">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Age</th>
+            @foreach (var header in @Model.headers)
+            {
+                <th>@header</th>
+            }
             <th>Actions</th>
         </tr>
         </thead>

@@ -1,4 +1,5 @@
-﻿using CodeMechanic.Diagnostics;
+﻿using System.Collections.Immutable;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.MySql;
 using Dapper;
 using Htmx;
@@ -11,22 +12,24 @@ namespace thecodemechanic.Pages.Samples.JustDoIt;
 
 public class Index : PageModel
 {
+    public string[] headers = typeof(Todo)
+        .GetProperties()
+        .Select(x => x.Name)
+        .ToArray();
+
     [BindProperty(SupportsGet = true)] public int Id { get; set; }
 
     public static List<Todo> Database = new();
 
     public async Task OnGet()
     {
-        Console.WriteLine(nameof(OnGet));
+        // Console.WriteLine(nameof(OnGet));
         using var connection = SqlConnections.Create();
         var all_todos =
             await connection.QueryAsync<Todo>(
                 @"select content, id from todos order by created_at desc limit 10;");
 
-        // var logs = await Procs.ViewLatestLogs.QueryAsync();
-        // logs.Take(5).Dump("logs");
-
-        Database.AddRange(all_todos);
+        Database = all_todos.ToList();
     }
 
     public IActionResult OnGetRow()
@@ -56,19 +59,7 @@ public class Index : PageModel
 
     private async Task<int> Upsert(Todo todo)
     {
-        // string sql =
-        //     @"insert into todos(content) values (@content) ON DUPLICATE KEY UPDATE content = VALUES(content)";
-        //
-        // using var connection = SqlConnections.Create();
-
-        // var updated_todo = new { content = todo.Content };
-        //
-        // var rowsAffected = await connection.ExecuteAsync(sql, updated_todo);
-
-        // Console.WriteLine(rowsAffected);
-
         int rows = await Procs.upserttodo.UpsertAsync(todo);
-
         return rows;
     }
 
