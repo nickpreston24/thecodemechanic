@@ -1,10 +1,11 @@
-﻿using System.Data.SqlClient;
+﻿using CodeMechanic.Diagnostics;
 using CodeMechanic.MySql;
 using Dapper;
 using Htmx;
 using justdoit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using railway;
 
 namespace thecodemechanic.Pages.Samples.JustDoIt;
 
@@ -12,14 +13,20 @@ public class Index : PageModel
 {
     [BindProperty(SupportsGet = true)] public int Id { get; set; }
 
-    public static List<Todo> Database = new()
-    {
-        new(1, "Buy Milk"),
-        new(2, "Moopsy! :3"),
-    };
+    public static List<Todo> Database = new();
 
-    public void OnGet()
+    public async Task OnGet()
     {
+        Console.WriteLine(nameof(OnGet));
+        using var connection = SqlConnections.Create();
+        var all_todos =
+            await connection.QueryAsync<Todo>(
+                @"select content, id from todos order by created_at desc limit 10;");
+
+        // var logs = await Procs.ViewLatestLogs.QueryAsync();
+        // logs.Take(5).Dump("logs");
+
+        Database.AddRange(all_todos);
     }
 
     public IActionResult OnGetRow()
@@ -34,28 +41,35 @@ public class Index : PageModel
 
     public async Task<IActionResult> OnPostUpdate([FromForm] Todo todo)
     {
-        string sql = @"insert into todos(content) values (@content)";
+        int rows = await Upsert(todo);
 
-        using var connection = SqlConnections.Create();
-        // using var command = new SqlCommand(connection)
-        var anonymousCustomer = new
-            { content = "ZZZ Top" };
+        // if nothing is updated, throw:
+        if (rows == 0 || Database.FirstOrDefault(x => x.Id == Id) is not { } t)
+            return BadRequest();
 
-        var rowsAffected =
-            await connection.ExecuteAsync(sql, anonymousCustomer);
-        Console.WriteLine(rowsAffected);
+        // update the table row:
+        t.Content = todo.Content;
+        t.Id = todo.Id;
 
-        if (Database.FirstOrDefault(x => x.Id == Id) is { } t)
-        {
-            t.Content = todo.Content;
-            t.Id = todo.Id;
+        return Request.IsHtmx() ? Partial("_Row", t) : Redirect("Index");
+    }
 
-            return Request.IsHtmx()
-                ? Partial("_Row", t)
-                : Redirect("Index");
-        }
+    private async Task<int> Upsert(Todo todo)
+    {
+        // string sql =
+        //     @"insert into todos(content) values (@content) ON DUPLICATE KEY UPDATE content = VALUES(content)";
+        //
+        // using var connection = SqlConnections.Create();
 
-        return BadRequest();
+        // var updated_todo = new { content = todo.Content };
+        //
+        // var rowsAffected = await connection.ExecuteAsync(sql, updated_todo);
+
+        // Console.WriteLine(rowsAffected);
+
+        int rows = await Procs.upserttodo.UpsertAsync(todo);
+
+        return rows;
     }
 
     public List<Todo> Todos => Database;

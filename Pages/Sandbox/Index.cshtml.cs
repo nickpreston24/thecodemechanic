@@ -4,8 +4,5 @@ namespace thecodemechanic.Pages.Sandbox;
 
 public class Index : PageModel
 {
-    public void OnGet()
-    {
-        
-    }
+    public void OnGet() { }
 }

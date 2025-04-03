@@ -10,6 +10,4 @@ public class HydroDashboard : HydroView
     public List<MenuItem> items { get; set; } = new();
 }
 
-public class MenuItem
-{
-}
+public class MenuItem { }

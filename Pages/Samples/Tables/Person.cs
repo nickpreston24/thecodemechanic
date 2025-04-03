@@ -2,9 +2,7 @@ namespace thecodemechanic;
 
 public class Person
 {
-    public Person()
-    {
-    }
+    public Person() { }
 
     public Person(int id, string name, int age)
     {

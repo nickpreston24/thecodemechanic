@@ -2,9 +2,7 @@ namespace justdoit;
 
 public class Todo
 {
-    public Todo()
-    {
-    }
+    public Todo() { }
 
     public Todo(int id, string content)
     {

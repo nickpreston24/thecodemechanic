@@ -4,8 +4,5 @@ namespace thecodemechanic.Pages.Blog;
 
 public class Index : PageModel
 {
-    public void OnGet()
-    {
-        
-    }
+    public void OnGet() { }
 }

@@ -48,16 +48,15 @@ internal class Program
     {
         var arguments = new ArgsMap(args);
 
-
         var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+        // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddHydro();
 
         var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
@@ -78,11 +77,7 @@ internal class Program
         app.Run();
     }
 
-    private static ServiceProvider CreateServices(
-        ArgsMap arguments
-        ,
-        Logger logger
-    )
+    private static ServiceProvider CreateServices(ArgsMap arguments, Logger logger)
     {
         var serviceProvider = new ServiceCollection()
             .AddSingleton(arguments)
@@ -100,9 +95,7 @@ public class Application
     private readonly Logger logger;
     private readonly RegexExtractionGenerator model_generator;
 
-    public Application(Logger logger
-        , RegexExtractionGenerator model_generator
-    )
+    public Application(Logger logger, RegexExtractionGenerator model_generator)
     {
         this.logger = logger;
         this.model_generator = model_generator;

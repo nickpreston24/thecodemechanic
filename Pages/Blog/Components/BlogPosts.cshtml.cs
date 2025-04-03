@@ -2,6 +2,4 @@ using Hydro;
 
 namespace thecodemechanic.Pages.Blog.Components;
 
-public class BlogPosts : HydroView
-{
-}
+public class BlogPosts : HydroView { }

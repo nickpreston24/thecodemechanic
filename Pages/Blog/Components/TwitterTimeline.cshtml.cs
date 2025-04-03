@@ -2,6 +2,4 @@ using Hydro;
 
 namespace thecodemechanic.Pages.Blog.Components;
 
-public class TwitterTimeline : HydroView
-{
-}
+public class TwitterTimeline : HydroView { }
