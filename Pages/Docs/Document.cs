@@ -5,7 +5,9 @@ namespace thecodemechanic;
 
 public sealed class Document
 {
-    private readonly Grepper.GrepResult grep_result;
+    public string file_path { get; set; } = string.Empty;
+
+    public Grepper.GrepResult grep_result { get; set; }
 
     public Document(string file_path)
     {
@@ -17,7 +19,6 @@ public sealed class Document
         this.grep_result = result;
     }
 
-    public string file_path { get; set; } = string.Empty;
 
     public string extension => file_path.NotEmpty()
         ? Path.GetExtension(file_path)
