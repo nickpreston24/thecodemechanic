@@ -1,8 +1,8 @@
+using CodeMechanic.Diagnostics;
 using CodeMechanic.Shargs;
 using Hydro.Configuration;
 using Serilog;
 using Serilog.Core;
-using Sharpify.Core;
 
 namespace thecodemechanic;
 
@@ -13,11 +13,15 @@ internal class Program
         var arguments = new ArgsMap(args);
         bool debug = arguments.HasFlag("--debug");
 
+        arguments.Dump("fixing the argsmap", ignoreNulls: true);
+
+        return;
+
         var logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.Console()
             .WriteTo.File(
-                "./thecodemechanic/thecodemechanic.log",
+                "./logs/thecodemechanic.log",
                 rollingInterval: RollingInterval.Day,
                 rollOnFileSizeLimit: true
             )
@@ -26,15 +30,8 @@ internal class Program
         bool run_as_web = arguments.HasCommand("web");
         bool run_as_cli = !run_as_web;
 
-        if (run_as_cli)
-        {
-            await RunAsCli(arguments, logger);
-        }
-
-        if (run_as_web)
-        {
-            RunAsWeb(args);
-        }
+        if (run_as_cli) await RunAsCli(arguments, logger);
+        if (run_as_web) RunAsWeb(args);
     }
 
     static async Task RunAsCli(ArgsMap arguments, Logger logger)
@@ -77,13 +74,15 @@ internal class Program
         app.Run();
     }
 
-    private static ServiceProvider CreateServices(ArgsMap arguments, Logger logger)
+    private static ServiceProvider CreateServices(ArgsMap arguments,
+        Logger logger)
     {
         var serviceProvider = new ServiceCollection()
             .AddSingleton(arguments)
             .AddSingleton<Logger>(logger)
             .AddSingleton<Application>()
-            .AddScoped<RegexExtractionGenerator>()
+            .AddSingleton<LocalDocumentService>()
+            // .AddScoped<RegexExtractionGenerator>()
             .BuildServiceProvider();
 
         return serviceProvider;
@@ -93,16 +92,23 @@ internal class Program
 public class Application
 {
     private readonly Logger logger;
-    private readonly RegexExtractionGenerator model_generator;
 
-    public Application(Logger logger, RegexExtractionGenerator model_generator)
+    private LocalDocumentService docs;
+    // private readonly RegexExtractionGenerator extraction_model_generator;
+
+    public Application(Logger logger,
+        // , RegexExtractionGenerator extractionModelGenerator
+        LocalDocumentService docs
+    )
     {
         this.logger = logger;
-        this.model_generator = model_generator;
+        // this.extraction_model_generator = extractionModelGenerator;
+        this.docs = docs;
     }
 
     public async Task Run()
     {
-        await model_generator.Run();
+        await docs.Run();
+        // await extraction_model_generator.Run();
     }
 }
