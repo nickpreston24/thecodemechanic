@@ -11,11 +11,6 @@ internal class Program
     static async Task Main(string[] args)
     {
         var arguments = new ArgsMap(args);
-        bool debug = arguments.HasFlag("--debug");
-
-        arguments.Dump("fixing the argsmap", ignoreNulls: true);
-
-        return;
 
         var logger = new LoggerConfiguration()
             .MinimumLevel.Information()
