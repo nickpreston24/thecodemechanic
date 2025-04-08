@@ -1,3 +1,5 @@
+using CodeMechanic.Bash;
+using CodeMechanic.FileSystem;
 using CodeMechanic.Shargs;
 using Hydro.Configuration;
 using Serilog;
@@ -10,6 +12,8 @@ internal class Program
     static async Task Main(string[] args)
     {
         var arguments = new ArgsMap(args);
+
+        await CreateToolsDir();
 
         var logger = new LoggerConfiguration()
             .MinimumLevel.Information()
@@ -26,6 +30,26 @@ internal class Program
 
         if (run_as_cli) await RunAsCli(arguments, logger);
         if (run_as_web) RunAsWeb(args);
+    }
+
+    private static async ValueTask CreateToolsDir()
+    {
+        var user_profile =
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        string dotnet_tools_dir = Path
+            .Combine(user_profile, ".dotnet/tools", ".cm")
+            .Replace("\\", "/");
+
+        Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
+
+        // await $"ls {dotnet_tools_dir}".Bash();
+
+        var fi = new SaveFile("foo")
+            .To(dotnet_tools_dir)
+            .As("test.txt", debug: false);
+
+        // await $"ls {fi.Directory}".Bash();
     }
 
     static async Task RunAsCli(ArgsMap arguments, Logger logger)
