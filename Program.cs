@@ -1,4 +1,3 @@
-using CodeMechanic.Bash;
 using CodeMechanic.FileSystem;
 using CodeMechanic.Shargs;
 using Hydro.Configuration;
@@ -96,11 +95,12 @@ internal class Program
         Logger logger)
     {
         var serviceProvider = new ServiceCollection()
+            .UseHttpClients()
             .AddSingleton(arguments)
             .AddSingleton<Logger>(logger)
             .AddSingleton<Application>()
             .AddSingleton<LocalDocumentService>()
-            // .AddScoped<RegexExtractionGenerator>()
+            .AddScoped<Regex101Service>()
             .BuildServiceProvider();
 
         return serviceProvider;
@@ -112,21 +112,21 @@ public class Application
     private readonly Logger logger;
 
     private LocalDocumentService docs;
-    // private readonly RegexExtractionGenerator extraction_model_generator;
+    private readonly Regex101Service regex101;
 
-    public Application(Logger logger,
-        // , RegexExtractionGenerator extractionModelGenerator
+    public Application(Logger logger
+        , Regex101Service extractionModelGenerator,
         LocalDocumentService docs
     )
     {
         this.logger = logger;
-        // this.extraction_model_generator = extractionModelGenerator;
+        this.regex101 = extractionModelGenerator;
         this.docs = docs;
     }
 
     public async Task Run()
     {
         await docs.Run();
-        // await extraction_model_generator.Run();
+        await regex101.Run();
     }
 }
