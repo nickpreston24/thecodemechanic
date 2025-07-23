@@ -13,36 +13,37 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Watch Include="**/*.cs*"/>
-        <Watch Include="img/*"/>
-        <Watch Include="js/*.js"/>
-        <Watch Include=".env"/>
-        <Watch Include="css/site.css"/>
+        <Watch Include="**/*.cs*" />
+        <Watch Include="img/*" />
+        <Watch Include="js/*.js" />
+        <Watch Include=".env" />
+        <Watch Include="css/site.css" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CodeMechanic.Bash" Version="1.0.2"/>
-        <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.4"/>
-        <PackageReference Include="CodeMechanic.Embeds" Version="1.0.3"/>
-        <PackageReference Include="CodeMechanic.FileSystem" Version="2.0.12"/>
-        <PackageReference Include="CodeMechanic.MySql" Version="1.0.2"/>
-        <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4"/>
-        <PackageReference Include="CodeMechanic.RegularExpressions" Version="1.0.8"/>
-        <PackageReference Include="CodeMechanic.Shargs" Version="1.0.5"/>
-        <PackageReference Include="CodeMechanic.Types" Version="1.0.12"/>
-        <PackageReference Include="Dapper" Version="2.1.66"/>
-        <PackageReference Include="Htmx" Version="1.8.0"/>
-        <PackageReference Include="Htmx.TagHelpers" Version="1.8.0"/>
-        <PackageReference Include="Hydro" Version="1.1.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
-        <PackageReference Include="Serilog.Sinks.File" Version="6.0.0"/>
-        <PackageReference Include="Sharpify.Core" Version="1.0.3"/>
-        <PackageReference Include="Vogen" Version="7.0.3"/>
+        <PackageReference Include="CodeMechanic.Async" Version="1.0.4" />
+        <PackageReference Include="CodeMechanic.Bash" Version="1.0.2" />
+        <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.4" />
+        <PackageReference Include="CodeMechanic.Embeds" Version="1.0.3" />
+        <PackageReference Include="CodeMechanic.FileSystem" Version="2.0.12" />
+        <PackageReference Include="CodeMechanic.MySql" Version="1.0.2" />
+        <PackageReference Include="CodeMechanic.Reflection" Version="1.0.4" />
+        <PackageReference Include="CodeMechanic.RegularExpressions" Version="1.0.8" />
+        <PackageReference Include="CodeMechanic.Shargs" Version="1.0.5" />
+        <PackageReference Include="CodeMechanic.Types" Version="1.0.12" />
+        <PackageReference Include="Dapper" Version="2.1.66" />
+        <PackageReference Include="Htmx" Version="1.8.0" />
+        <PackageReference Include="Htmx.TagHelpers" Version="1.8.0" />
+        <PackageReference Include="Hydro" Version="1.1.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
+        <PackageReference Include="Sharpify.Core" Version="1.0.3" />
+        <PackageReference Include="Vogen" Version="7.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include=".sqil/**/*"/>
+        <Compile Include=".sqil/**/*" />
     </ItemGroup>
 
 </Project>
