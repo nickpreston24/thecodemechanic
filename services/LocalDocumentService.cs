@@ -54,7 +54,7 @@ public class LocalDocumentService : QueuedService
 
         Console.WriteLine("root :>> " + root);
 
-        var grepper = new Grepper()
+        var grepper = new Grepper
         {
             RootPath = root,
             FileSearchMask = file_mask,
@@ -62,7 +62,15 @@ public class LocalDocumentService : QueuedService
         };
 
         var docs_found =
-            (await SearchLocalDriveForDocs(grepper)).Select(x => x.file_path);
+            (await SearchLocalDriveForDocs(grepper))
+            .Select(x => x.file_path)
+            .ToArray();
+
+        if (docs_found.Length == 0)
+        {
+            Console.WriteLine("No docs found to open.  Exiting.");
+            return;
+        }
 
         // docs_found.Dump(nameof(docs_found), ignoreNulls: true);
 
