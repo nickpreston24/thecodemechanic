@@ -24,12 +24,12 @@ public class Index : PageModel
     public async Task OnGet()
     {
         // Console.WriteLine(nameof(OnGet));
-        using var connection = SqlConnections.Create();
-        var all_todos =
-            await connection.QueryAsync<Todo>(
-                @"select content, id from todos order by created_at desc limit 10;");
-
-        Database = all_todos.ToList();
+        // using var connection = SqlConnections.Create();
+        // var all_todos =
+        //     await connection.QueryAsync<Todo>(
+        //         @"select content, id from todos order by created_at desc limit 10;");
+        //
+        // Database = all_todos.ToList();
     }
 
     public IActionResult OnGetRow()
