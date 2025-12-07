@@ -24,6 +24,8 @@ internal class Program
 
         bool run_as_web = arguments.HasCommand("web");
         bool run_as_cli = !run_as_web;
+        logger.Information($"run as web? {run_as_web}");
+        logger.Information($"run as cli? {run_as_cli}");
 
         if (run_as_cli) await RunAsCli(arguments, logger);
         if (run_as_web) RunAsWeb(logger, args);
@@ -51,6 +53,7 @@ internal class Program
 
     static async Task RunAsCli(ArgsMap arguments, Logger logger)
     {
+        logger.Information("Setting up cli");
         var services = CreateServices(arguments, logger);
         Application app = services.GetRequiredService<Application>();
         await app.Run();
@@ -90,8 +93,8 @@ internal class Program
         app.MapRazorPages();
         app.UseHydro(builder.Environment);
 
-        app.Run();
         logger.Information("Running as a web app.");
+        app.Run();
     }
 
     private static ServiceProvider CreateServices(ArgsMap arguments,
