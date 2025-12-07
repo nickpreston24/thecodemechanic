@@ -12,8 +12,6 @@ internal class Program
     {
         var arguments = new ArgsMap(args);
 
-        await CreateToolsDir();
-
         var logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.Console()
@@ -60,6 +58,8 @@ internal class Program
 
     private static void RunAsWeb(Logger logger, params string[] args)
     {
+        logger.Information("Setting up as a web app.");
+
         var arguments = new ArgsMap(args);
 
         var builder = WebApplication.CreateBuilder(args);
@@ -91,6 +91,7 @@ internal class Program
         app.UseHydro(builder.Environment);
 
         app.Run();
+        logger.Information("Running as a web app.");
     }
 
     private static ServiceProvider CreateServices(ArgsMap arguments,
