@@ -18,7 +18,7 @@ internal class Program
             .MinimumLevel.Information()
             .WriteTo.Console()
             .WriteTo.File(
-                "./logs/thecodemechanic.log",
+                ".logs/thecodemechanic.log",
                 rollingInterval: RollingInterval.Day,
                 rollOnFileSizeLimit: true
             )
@@ -28,7 +28,7 @@ internal class Program
         bool run_as_cli = !run_as_web;
 
         if (run_as_cli) await RunAsCli(arguments, logger);
-        if (run_as_web) RunAsWeb(args);
+        if (run_as_web) RunAsWeb(logger, args);
     }
 
     private static async ValueTask CreateToolsDir()
@@ -58,7 +58,7 @@ internal class Program
         await app.Run();
     }
 
-    private static void RunAsWeb(params string[] args)
+    private static void RunAsWeb(Logger logger, params string[] args)
     {
         var arguments = new ArgsMap(args);
 
@@ -67,6 +67,8 @@ internal class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
         builder.Services.AddHydro();
+
+        builder.Services.AddSingleton<Logger>(logger);
 
         var app = builder.Build();
 
@@ -104,29 +106,5 @@ internal class Program
             .BuildServiceProvider();
 
         return serviceProvider;
-    }
-}
-
-public class Application
-{
-    private readonly Logger logger;
-
-    private LocalDocumentService docs;
-    private readonly Regex101Service regex101;
-
-    public Application(Logger logger
-        , Regex101Service extractionModelGenerator,
-        LocalDocumentService docs
-    )
-    {
-        this.logger = logger;
-        this.regex101 = extractionModelGenerator;
-        this.docs = docs;
-    }
-
-    public async Task Run()
-    {
-        await docs.Run();
-        await regex101.Run();
     }
 }

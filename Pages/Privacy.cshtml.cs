@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Serilog.Core;
 
 namespace thecodemechanic.Pages;
 
 public class PrivacyModel : PageModel
 {
-    private readonly ILogger<PrivacyModel> _logger;
+    private readonly Logger _logger;
 
-    public PrivacyModel(ILogger<PrivacyModel> logger)
+    public PrivacyModel(Logger logger)
     {
         _logger = logger;
     }

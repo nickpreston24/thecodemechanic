@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Serilog.Core;
 
 namespace thecodemechanic.Pages;
 
@@ -12,9 +13,9 @@ public class ErrorModel : PageModel
 
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-    private readonly ILogger<ErrorModel> _logger;
+    private readonly Logger _logger;
 
-    public ErrorModel(ILogger<ErrorModel> logger)
+    public ErrorModel(Logger logger)
     {
         _logger = logger;
     }

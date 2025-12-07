@@ -1,4 +1,5 @@
-﻿@model justdoit.Todo
+﻿@using Htmx.TagHelpers
+@model justdoit.Todo
 @{
     string type_name = typeof(justdoit.Todo).Name.ToLower();
     var id = $"{type_name}-{Model.Id}";

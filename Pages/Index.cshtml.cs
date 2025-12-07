@@ -1,15 +1,19 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Serilog.Core;
 
 namespace thecodemechanic.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly Logger _logger;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(Logger logger)
     {
         _logger = logger;
     }
 
-    public void OnGet() { }
+    public void OnGet()
+    {
+        _logger.Information("Loaded main page.");
+    }
 }
