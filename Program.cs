@@ -105,7 +105,7 @@ internal class Program
             .AddSingleton(arguments)
             .AddSingleton<Logger>(logger)
             .AddSingleton<Application>()
-            .AddSingleton<LocalDocumentService>()
+            .AddSingleton<FileFinder>()
             .AddScoped<Regex101Service>()
             .BuildServiceProvider();
 

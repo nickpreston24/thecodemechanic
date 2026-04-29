@@ -6,12 +6,12 @@ public class Application
 {
     private readonly Logger logger;
 
-    private LocalDocumentService docs;
+    private FileFinder docs;
     private readonly Regex101Service regex101;
 
     public Application(Logger logger
         , Regex101Service extractionModelGenerator,
-        LocalDocumentService docs
+        FileFinder docs
     )
     {
         this.logger = logger;

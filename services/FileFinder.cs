@@ -10,7 +10,7 @@ using Vogen;
 
 namespace thecodemechanic;
 
-public class LocalDocumentService : QueuedService
+public class FileFinder : QueuedService
 {
     private readonly ArgsMap arguments;
     private string file_mask = string.Empty;
@@ -19,7 +19,7 @@ public class LocalDocumentService : QueuedService
     private bool debug;
     private readonly Regex line_pattern_regex;
 
-    public LocalDocumentService(ArgsMap arguments)
+    public FileFinder(ArgsMap arguments)
     {
         this.arguments = arguments;
         this.debug = arguments.HasFlag("--debug");
