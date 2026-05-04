@@ -1,4 +1,5 @@
 using CodeMechanic.FileSystem;
+using CodeMechanic.Razorhat;
 using CodeMechanic.Shargs;
 using Hydro.Configuration;
 using Serilog;
@@ -69,6 +70,7 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddRazorPages();
+        builder.UseImportMap(debug: false);
         builder.Services.AddHydro();
 
         builder.Services.AddSingleton<Logger>(logger);

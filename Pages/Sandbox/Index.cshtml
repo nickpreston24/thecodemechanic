@@ -1,31 +1,33 @@
 @page
-@using Hydro
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using thecodemechanic.Pages.Shared.Components
-@model thecodemechanic.Pages.Sandbox.Index
+@model Index
 
 <section x-data="setup_sandbox()">
-    <dashboard>
-        <slot name="left">
-            <ul class="menu menu-vertical bg-base-200 rounded-box">
-                <template x-for="[key,view] in Object.entries(views)">
-                    <li x-on:click="toggle_view(key)">
-                        <a :class="view.show ? 'active': ''">
-                            <div :data-tip="view.tooltip">
-                                <span class="text-lg font-bold">
-                                    <h2 x-text="view.title"
-                                        class="w-64"
-                                        :class="!view.show ? ' text-neutral-500/80' : ''"></h2>
-                                </span>
-                            </div>
-                        </a>
-                    </li>
-                </template>
-            </ul>
-        </slot>
-        <partial name="_Lorem"></partial>
-        <partial name="_Bar"></partial>
-    </dashboard>
+
+    <button class="btn">Normal Button</button>
+
+    <button_39>foo</button_39>
+
+    @* <dashboard> *@
+    @*     <slot name="left"> *@
+    @*         <ul class="menu menu-vertical bg-base-200 rounded-box"> *@
+    @*             <template x-for="[key,view] in Object.entries(views)"> *@
+    @*                 <li x-on:click="toggle_view(key)"> *@
+    @*                     <a :class="view.show ? 'active': ''"> *@
+    @*                         <div :data-tip="view.tooltip"> *@
+    @*                             <span class="text-lg font-bold"> *@
+    @*                                 <h2 x-text="view.title" *@
+    @*                                     class="w-64" *@
+    @*                                     :class="!view.show ? ' text-neutral-500/80' : ''"></h2> *@
+    @*                             </span> *@
+    @*                         </div> *@
+    @*                     </a> *@
+    @*                 </li> *@
+    @*             </template> *@
+    @*         </ul> *@
+    @*     </slot> *@
+    @*     <partial name="_Lorem"></partial> *@
+    @*     <partial name="_Bar"></partial> *@
+    @* </dashboard> *@
 </section>
 <script>
     function setup_sandbox() {
@@ -51,3 +53,4 @@
         }
     }
 </script>
+

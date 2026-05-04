@@ -1,6 +1,5 @@
 ﻿@using CodeMechanic.Types
-@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using thecodemechanic.Pages.Shared.Components
+@using NavbarLink = thecodemechanic.Pages.Shared.Components.NavbarLink
 <!DOCTYPE html>
 <html data-theme="dracula" lang="en">
 <head>
@@ -11,36 +10,46 @@
 
     <title>@ViewData["Title"] - thecodemechanic</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-          rel="stylesheet">
+    @inject CodeMechanic.Razorhat.ImportMap ImportMap
 
-    <link
-        href="~/css/site.css"
-        rel="stylesheet" type="text/css"/>
+    @Html.Raw(ImportMap.RenderAsScripts(debug: true))
 
-    <!-- TAILWIND -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/themes.css" rel="stylesheet" type="text/css"/>
-    
-    <!-- HTMX -->
 
-    <script src="~/lib/htmx/htmx.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @* ============== PRE-IMPORT MAP ================= *@
 
-    <!-- ALPINEJS -->
-    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/collapse@@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/persist@@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/focus@@3.x.x/dist/cdn.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/morph@@3.x.x/dist/cdn.min.js"></script>
 
-    <script src="~/lib/alpinejs/cdn.min.js" defer></script>
-
-    <!-- Icons  -->
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    @* <link rel="preconnect" href="https://fonts.googleapis.com"> *@
+    @* <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
+    @* <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" *@
+    @*       rel="stylesheet"> *@
+    @* *@
+    @* <link *@
+    @*     href="~/css/site.css" *@
+    @*     rel="stylesheet" type="text/css"/> *@
+    @* *@
+    @* <!-- TAILWIND --> *@
+    @* *@
+    @* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/> *@
+    @* <script src="https://cdn.tailwindcss.com"></script> *@
+    @* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/themes.css" rel="stylesheet" type="text/css"/> *@
+    @* *@
+    @* <!-- HTMX --> *@
+    @* *@
+    @* <script src="~/lib/htmx/htmx.min.js"></script> *@
+    @* <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
+    @* *@
+    @* <!-- ALPINEJS --> *@
+    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/collapse@@3.x.x/dist/cdn.min.js"></script> *@
+    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/persist@@3.x.x/dist/cdn.min.js"></script> *@
+    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/focus@@3.x.x/dist/cdn.min.js"></script> *@
+    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/morph@@3.x.x/dist/cdn.min.js"></script> *@
+    @* *@
+    @* <script src="~/lib/alpinejs/cdn.min.js" defer></script> *@
+    @* *@
+    @* <!-- Icons  --> *@
+    @* <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script> *@
 
 </head>
 
