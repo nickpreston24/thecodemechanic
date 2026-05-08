@@ -16,9 +16,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
-
     @* ============== PRE-IMPORT MAP ================= *@
-
 
     @* <link rel="preconnect" href="https://fonts.googleapis.com"> *@
     @* <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
@@ -28,7 +26,7 @@
     @* <link *@
     @*     href="~/css/site.css" *@
     @*     rel="stylesheet" type="text/css"/> *@
-    @* *@
+
     @* <!-- TAILWIND --> *@
     @* *@
     @* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/> *@
@@ -60,8 +58,8 @@
                    {
                        new NavbarLink("Home", "/"),
                        new NavbarLink("Blog", "/Blog"),
-                       new NavbarLink("Sandbox", "/Sandbox"),
-                       new NavbarLink("Storybook", "/Storybook"),
+                       // new NavbarLink("Sandbox", "/Sandbox"),
+                       // new NavbarLink("Storybook", "/Storybook"),
                        new NavbarLink("Samples", "").With(l =>
                        {
                            // todo: make this recursively render.
@@ -73,7 +71,7 @@
 </header>
 
 <div class="min-h-screen">
-    <main role="main" class="pb-3">
+    <main role="main" class="h-full pb-3">
         @RenderBody()
     </main>
 </div>

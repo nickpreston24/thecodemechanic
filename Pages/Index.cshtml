@@ -5,44 +5,102 @@
 }
 
 <div x-data="setup_main()" class="text-center">
+    <section class="h-screen scroll-y-auto">
 
-    <div class="">
-        <div class="">
+        <h1>Hello, there!</h1>
 
-            <h1>Hello, there!</h1>
-            <badge debug="true">
-                My badge (should be black and white!)
-            </badge>
+        <badge debug="true">
+            My badge (should be black and white!)
+        </badge>
 
-            <accordion></accordion>
+        <accordion></accordion>
 
-            <span x-show="true" class="rounded-full px-2.5 py-0.5 text-white text-xs font-semibold bg-black">
-                Badge (how it should look)
-            </span>
-
-            <bento-card>
-                <badge>Foo</badge>
-                <p>Bar</p>
-            </bento-card>
-
-            @* <card_52></card_52> *@
-
-            @* <editable-field-sample/> *@
+        <bento-card>
+            <badge>Foo</badge>
+            <p class="badge badge-ghost">Bar</p>
 
             <alpine-toggle-sample/>
 
-            @* <accordion_2></accordion_2> *@
+            <checkbox></checkbox>
 
-            <partial name="Shared/_UnderConstruction"></partial>
+            <copytoclipboard/>
+        </bento-card>
 
-            @* <island hx-page="Sandbox/"/> *@
+        @* Todo: Fix Cards going blank / hardcode the basic template *@
+        @* <card/> *@
 
 
+        <command/>
+
+        <div x-show="false">
+            <banner/>
         </div>
-        <div class="">
 
-        </div>
-    </div>
+        @* TODO: button is buggy and I think collides with real buttons
+            might need to rename to <pines-button>
+             *@
+        @* <button>Pines Button</button> *@
+
+        <breadcrumbs></breadcrumbs>
+        @* <editable-field-sample/> *@
+
+        <alert/>
+
+        <island method="get" page="Fubar"></island>
+
+        @* <island page="Sandbox/"/> *@
+
+
+        <divider>=====</divider>
+
+        <h1 class="text-5xl">Menus</h1>
+
+        <contextmenu/>
+        <dropdownmenu/>
+        <fullscreenmenu/>
+        <fullscreenmodal/>
+
+        <menubar/>
+
+        <divider>=====</divider>
+
+        @* <marquee/> *@
+        @* <marqueeadditional/> *@
+
+        <divider>=====</divider>
+
+        <hovercard/>
+
+        <divider>=====</divider>
+
+        <imagegallery/>
+
+        <divider>=====</divider>
+
+        <datepicker></datepicker>
+
+        <divider>=====</divider>
+
+
+    </section>
+
+
+    <section class="h-screen scroll-y-auto">
+
+
+        @* <monacoeditor></monacoeditor> *@
+
+        <navigationmenu/>
+
+        <pagination/>
+
+    </section>
+
+
+    <section x-show="false" class="h-screen">
+        <partial name="Shared/_UnderConstruction"></partial>
+
+    </section>
 </div>
 
 <script>

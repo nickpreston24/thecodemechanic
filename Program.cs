@@ -29,28 +29,10 @@ internal class Program
         logger.Information($"run as cli? {run_as_cli}");
 
         if (run_as_cli) await RunAsCli(arguments, logger);
-        if (run_as_web) RunAsWeb(logger, args);
+        if (run_as_web) RunAsWeb(logger, arguments);
     }
 
-    private static async ValueTask CreateToolsDir()
-    {
-        var user_profile =
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
-        string dotnet_tools_dir = Path
-            .Combine(user_profile, ".dotnet/tools", ".cm")
-            .Replace("\\", "/");
-
-        Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
-
-        // await $"ls {dotnet_tools_dir}".Bash();
-
-        var fi = new SaveFile("foo")
-            .To(dotnet_tools_dir)
-            .As("test.txt", debug: false);
-
-        // await $"ls {fi.Directory}".Bash();
-    }
 
     static async Task RunAsCli(ArgsMap arguments, Logger logger)
     {
@@ -60,11 +42,10 @@ internal class Program
         await app.Run();
     }
 
-    private static void RunAsWeb(Logger logger, params string[] args)
+    private static void RunAsWeb(Logger logger, ArgsMap argsMap, params string[] args)
     {
         logger.Information("Setting up as a web app.");
 
-        var arguments = new ArgsMap(args);
 
         var builder = WebApplication.CreateBuilder(args);
 
@@ -72,7 +53,7 @@ internal class Program
         builder.Services.AddRazorPages();
         builder.UseImportMap(debug: false);
         builder.Services.AddHydro();
-
+        builder.Services.AddSingleton(argsMap);
         builder.Services.AddSingleton<Logger>(logger);
 
         var app = builder.Build();
@@ -112,5 +93,28 @@ internal class Program
             .BuildServiceProvider();
 
         return serviceProvider;
+    }
+
+
+
+
+    private static async ValueTask CreateToolsDir()
+    {
+        var user_profile =
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        string dotnet_tools_dir = Path
+            .Combine(user_profile, ".dotnet/tools", ".cm")
+            .Replace("\\", "/");
+
+        Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
+
+        // await $"ls {dotnet_tools_dir}".Bash();
+
+        var fi = new SaveFile("foo")
+            .To(dotnet_tools_dir)
+            .As("test.txt", debug: false);
+
+        // await $"ls {fi.Directory}".Bash();
     }
 }

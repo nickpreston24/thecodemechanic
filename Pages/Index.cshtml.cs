@@ -5,15 +5,15 @@ namespace thecodemechanic.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly Logger _logger;
+    private readonly Logger logger;
 
     public IndexModel(Logger logger)
     {
-        _logger = logger;
+        this.logger = logger;
     }
 
     public void OnGet()
     {
-        _logger.Information("Loaded main page.");
+        logger.Information("Loaded main page.");
     }
 }

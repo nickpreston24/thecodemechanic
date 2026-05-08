@@ -13,19 +13,20 @@
 
   </PropertyGroup>
 
-  <!-- Drip.UI.SourceGen.csproj (or your main RazorHAT consuming .csproj) -->
-  <PropertyGroup>
-    <!-- This forces Roslyn to emit the real .g.cs files to a predictable folder -->
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-    <CompilerGeneratedFilesOutputPath>obj/Generated</CompilerGeneratedFilesOutputPath>
+<!--  &lt;!&ndash; Drip.UI.SourceGen.csproj (or your main RazorHAT consuming .csproj) &ndash;&gt;-->
+<!--  <PropertyGroup>-->
+<!--    &lt;!&ndash; This forces Roslyn to emit the real .g.cs files to a predictable folder &ndash;&gt;-->
+<!--    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
+<!--    <CompilerGeneratedFilesOutputPath>obj/Generated</CompilerGeneratedFilesOutputPath>-->
 
-    <!-- Optional but nice: keep it clean on every build -->
-    <CleanGeneratedFiles>true</CleanGeneratedFiles>
-  </PropertyGroup>
+<!--    &lt;!&ndash; Optional but nice: keep it clean on every build &ndash;&gt;-->
+<!--    <CleanGeneratedFiles>true</CleanGeneratedFiles>-->
+<!--  </PropertyGroup>-->
 
-  
+
   <ItemGroup>
-    <Watch Include="**/*.cs*"/>
+    <Watch Include="**/*.cshtml.cs"/>
+    <Watch Include="**/*.cs"/>
     <Watch Include="img/*"/>
     <Watch Include="js/*.js"/>
     <Watch Include=".env"/>
