@@ -12,7 +12,7 @@ COPY ["nuget.config", "./"]
 RUN dotnet restore "thecodemechanic.csproj"
 COPY . .
 WORKDIR "/src/"
-RUN libman restore
+# RUN libman restore
 RUN dotnet build "thecodemechanic.csproj" -c Release -o /app/build
 
 FROM build AS publish
