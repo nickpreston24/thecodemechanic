@@ -1,0 +1,10 @@
+/*
+This fix is here because I don't have tailwindcss/daisy cli compiling everything to output - things like x-cloak.
+
+Annoying!  
+*/
+
+
+[x-cloak] {
+    display: none !important;
+}
