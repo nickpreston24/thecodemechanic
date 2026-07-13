@@ -3,9 +3,9 @@
 @import "./daisy-ux.css";
 @import "../fonts/space-grotesk.css";
 
-[x-cloak] {
-    display: none !important;
-}
+/*[x-cloak] {*/
+/*    display: none !important;*/
+/*}*/
 
 @theme {
     /* Midnight space theme */

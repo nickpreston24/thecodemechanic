@@ -1,13 +1,15 @@
 @page
+@using CodeMechanic.Razorhat
 @model thecodemechanic.Pages.Admin
+@inject ImportMap ImportMap
 
 @{
     // Layout = null;
+    ImportMap.RenderAsScripts(debug: true);
+    int import_count = ImportMap.Scripts.Count;
 }
 
-<!-- HERO + NAVBAR OVERLAY -->
-<section class="relative min-h-[85dvh] flex flex-col overflow-hidden"> <!-- Reduced from 100dvh -->
-
+<section x-data class="relative min-h-[85dvh] flex flex-col overflow-hidden"> <!-- Reduced from 100dvh -->
 
     <div class='hero min-h-[30rem] rounded bg-base-200'>
         <div class='text-center hero-content'>
@@ -103,3 +105,27 @@
 
 
 
+<section>
+
+
+    <div class="stats shadow">
+        <div class="stat">
+            <div class="stat-title">Imports Loaded</div>
+            <div class="stat-value">@import_count</div>
+            <div class="stat-desc">21% more than last month</div>
+        </div>
+    </div>
+
+    @* <div class="stats"> *@
+    @*     <h1>Debugging</h1> *@
+    @* *@
+    @* *@
+    @*     <span class="stats-vertical"> *@
+    @*         All imports loaded correctly? *@
+    @*     </span> *@
+    @* *@
+    @*     <b>total:</b> *@
+    @* *@
+    @* *@
+    @* </div> *@
+</section>

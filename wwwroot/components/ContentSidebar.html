@@ -1,8 +1,8 @@
-<div x-data="{ localOpen: false }" class="relative z-50">
+<div class="relative z-50">
 
     <template x-teleport="body">
         <div x-show="$store.content.modalOpen" @keydown.window.escape="$store.content.cancelEdit()"
-             class="relative z-[99]" x-effect="localOpen = $store.content.modalOpen">
+             class="relative z-[99]">
 
             <!-- Backdrop -->
             <div x-show="$store.content.modalOpen" x-transition.opacity.duration.300ms
@@ -13,7 +13,7 @@
             <div class="overflow-hidden fixed inset-0">
                 <div class="overflow-hidden absolute inset-0">
                     <div class="flex fixed inset-y-0 right-0 pt-11 pl-10 max-w-full">
-                        <div x-show="$store.content.modalOpen" @click.away="$store.content.cancelEdit()"
+                        <div x-show="$store.content.modalOpen"
                              x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700"
                              x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
                              x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700"

@@ -28,7 +28,7 @@
 
     <link href="css/output.css" rel="stylesheet" type="text/css"/>
     <link href="css/temp_fixes.css" rel="stylesheet" type="text/css"/>
-    
+
 </head>
 
 <body class="anonymous-pro-regular">
@@ -54,6 +54,8 @@
 
 
 <script type="module">
+
+    console.log("[DEBUG] loading content sidebar!")
     const modalHtml = await fetch("/components/ContentSidebar.html")
         .then(r => r.text());
 
@@ -64,19 +66,6 @@
         window.Alpine.initTree(modalPlaceholder);
     }
 </script>
-
-@* <script type="module"> *@
-@*     // Per-page component loading (stays local to index.html)         *@
-@*     import modalHtml from "../../Pages/Components/ContentSidebar.html?raw"; *@
-@* *@
-@*     // Inject + initialize modal *@
-@*     const modalPlaceholder = document.getElementById("modal-placeholder"); *@
-@*     modalPlaceholder.innerHTML = modalHtml; *@
-@* *@
-@*     if (window.Alpine) { *@
-@*         window.Alpine.initTree(modalPlaceholder); *@
-@*     } *@
-@* </script> *@
 
 </body>
 </html>
