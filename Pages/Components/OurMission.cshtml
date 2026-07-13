@@ -1,0 +1,36 @@
+@page
+@model thecodemechanic.Pages.Components.OurMission
+
+@{
+    Layout = null;
+}
+
+<div x-data class="relative z-30 border-red-500 border-0 mt-10 mb-10">
+    <div x-data="{ show: false }" x-init="setTimeout(() => show = true, 300)"
+         :class="{ 'opacity-0': !show, 'opacity-100': show }" class="transition-all duration-700">
+
+        <div class="px-8 md:px-12 lg:px-16 max-w-2xl mx-auto border-0">
+
+            <div class="uppercase tracking-[3px] text-sm mb-3 text-white/70">
+                WHO WE ARE
+            </div>
+
+            <h1 x-edit="content.who-we-are.title"
+                class="dark-saber text-star text-6xl md:text-7xl font-display tracking-tighter leading-none mb-6">
+                The Northstar Pedigree
+            </h1>
+
+            <p x-edit="content.our-mission-text" class="text-tech-blue mb-10"></p>
+
+            <span id="mission-marquee-placeholder"></span>
+
+            <a href="#" class="btn btn-md lg:btn-lg w-50 bg-tech-blue btn-saber text-xl ">
+                LEARN MORE
+            </a>
+
+        </div>
+    </div>
+</div>
+
+
+

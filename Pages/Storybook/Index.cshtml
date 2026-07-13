@@ -1,62 +1,75 @@
 @page
 @model Index
 
-<section x-data="setup_storybook()">
+<section x-data>
+    
+    <h1>Storybook</h1>
 
-    <dashboard>
-        <slot name="left">
-            <ul class="menu menu-vertical bg-base-200 rounded-box">
-                <template x-for="[key,view] in Object.entries(views)">
-                    <li x-on:click="toggle_view(key)">
-                        <a :class="view.show ? 'active': ''">
-                            <div :data-tip="view.tooltip">
-                                <span class="text-lg font-bold">
-                                    <h2 x-text="view.title"
-                                        class="w-64"
-                                        :class="!view.show ? ' text-neutral-500/80' : ''"></h2>
-                                </span>
-                            </div>
-                        </a>
-                    </li>
-                </template>
-            </ul>
-        </slot>
-        <stack>
-            <div x-show="views.construction.show">
-                <partial name="Shared/_UnderConstruction"></partial>
-            </div>
-            <div x-show="views.tooltip.show">
-                <tooltip text="hi there">
-                    <button class="btn btn-primary">
-                        This is a tooltip test
-                    </button>
-                </tooltip>
-            </div>
-        </stack>
-    </dashboard>
+    <accordion> foo</accordion>
+
+
 </section>
-<script>
-    function setup_storybook() {
-        return {
-            lorem: "ipsum",
-            views: {
-                tooltip: {
-                    show: true,
-                    title: "kitty"
-                },
-                construction: {
-                    show: false,
-                    title: "bar"
-                }
-            },
 
-            toggle_view(name) {
-                let matching = this.views[name];
-                matching.show = !matching.show;
-                for (const [key, value] of Object.entries(this.views).filter(([key, value]) => key !== name)) {
-                    value.show = false;
-                }
-            }
-        }
-    }
-</script>
+
+
+@* sample dash *@
+
+
+@* <dashboard> *@
+@*     <slot name="left"> *@
+@*         <ul class="menu menu-vertical bg-base-200 rounded-box"> *@
+@*             <template x-for="[key,view] in Object.entries(views)"> *@
+@*                 <li x-on:click="toggle_view(key)"> *@
+@*                     <a :class="view.show ? 'active': ''"> *@
+@*                         <div :data-tip="view.tooltip"> *@
+@*                             <span class="text-lg font-bold"> *@
+@*                                 <h2 x-text="view.title" *@
+@*                                     class="w-64" *@
+@*                                     :class="!view.show ? ' text-neutral-500/80' : ''"></h2> *@
+@*                             </span> *@
+@*                         </div> *@
+@*                     </a> *@
+@*                 </li> *@
+@*             </template> *@
+@*         </ul> *@
+@*     </slot> *@
+@*     <stack> *@
+@*         <div x-show="views.construction.show"> *@
+@*             <partial name="Shared/_UnderConstruction"></partial> *@
+@*         </div> *@
+@*         <div x-show="views.tooltip.show"> *@
+@*             <tooltip text="hi there"> *@
+@*                 <button class="btn btn-primary"> *@
+@*                     This is a tooltip test *@
+@*                 </button> *@
+@*             </tooltip> *@
+@*         </div> *@
+@*     </stack> *@
+@* </dashboard> *@
+@* *@
+@* *@
+@* <script> *@
+@*     function setup_storybook() { *@
+@*         return { *@
+@*             lorem: "ipsum", *@
+@*             views: { *@
+@*                 tooltip: { *@
+@*                     show: true, *@
+@*                     title: "kitty" *@
+@*                 }, *@
+@*                 construction: { *@
+@*                     show: false, *@
+@*                     title: "bar" *@
+@*                 } *@
+@*             }, *@
+@* *@
+@*             toggle_view(name) { *@
+@*                 let matching = this.views[name]; *@
+@*                 matching.show = !matching.show; *@
+@*                 for (const [key, value] of Object.entries(this.views).filter(([key, value]) => key !== name)) { *@
+@*                     value.show = false; *@
+@*                 } *@
+@*             } *@
+@*         } *@
+@*     } *@
+@* </script> *@

@@ -16,58 +16,31 @@
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
-    @* ============== PRE-IMPORT MAP ================= *@
-
-    @* <link rel="preconnect" href="https://fonts.googleapis.com"> *@
-    @* <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
-    @* <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" *@
-    @*       rel="stylesheet"> *@
-    @* *@
-    @* <link *@
-    @*     href="~/css/site.css" *@
-    @*     rel="stylesheet" type="text/css"/> *@
-
-    @* <!-- TAILWIND --> *@
-    @* *@
-    @* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/> *@
-    @* <script src="https://cdn.tailwindcss.com"></script> *@
-    @* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/themes.css" rel="stylesheet" type="text/css"/> *@
-    @* *@
-    @* <!-- HTMX --> *@
-    @* *@
-    @* <script src="~/lib/htmx/htmx.min.js"></script> *@
-    @* <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
-    @* *@
-    @* <!-- ALPINEJS --> *@
-    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/collapse@@3.x.x/dist/cdn.min.js"></script> *@
-    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/persist@@3.x.x/dist/cdn.min.js"></script> *@
-    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/focus@@3.x.x/dist/cdn.min.js"></script> *@
-    @* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/morph@@3.x.x/dist/cdn.min.js"></script> *@
-    @* *@
-    @* <script src="~/lib/alpinejs/cdn.min.js" defer></script> *@
-    @* *@
-    @* <!-- Icons  --> *@
-    @* <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script> *@
+   
 
 </head>
 
 <body class="anonymous-pro-regular" x-data="setup_layout()">
 
 <header>
-    <navbar links="@(new List<NavbarLink>()
-                   {
-                       new NavbarLink("Home", "/"),
-                       new NavbarLink("Blog", "/Blog"),
-                       // new NavbarLink("Sandbox", "/Sandbox"),
-                       // new NavbarLink("Storybook", "/Storybook"),
-                       new NavbarLink("Samples", "").With(l =>
-                       {
-                           // todo: make this recursively render.
-                           l.children.Add(new NavbarLink("Tables", "/Samples/Tables"));
-                           l.children.Add(new NavbarLink("JustDoIt", "/Samples/JustDoIt"));
-                       }),
-                   })">
-    </navbar>
+    
+    <cm-navbar></cm-navbar>
+    
+    
+    @* <navbar links="@(new List<NavbarLink>() *@
+    @*                { *@
+    @*                    new NavbarLink("Home", "/"), *@
+    @*                    new NavbarLink("Blog", "/Blog"), *@
+    @*                    // new NavbarLink("Sandbox", "/Sandbox"), *@
+    @*                    // new NavbarLink("Storybook", "/Storybook"), *@
+    @*                    new NavbarLink("Samples", "").With(l => *@
+    @*                    { *@
+    @*                        // todo: make this recursively render. *@
+    @*                        l.children.Add(new NavbarLink("Tables", "/Samples/Tables")); *@
+    @*                        l.children.Add(new NavbarLink("JustDoIt", "/Samples/JustDoIt")); *@
+    @*                    }), *@
+    @*                })"> *@
+    @* </navbar> *@
 </header>
 
 <div class="min-h-screen">
@@ -86,3 +59,39 @@
 </script>
 </body>
 </html>
+
+
+
+
+@* ============== PRE-IMPORT MAP ================= *@
+
+@* <link rel="preconnect" href="https://fonts.googleapis.com"> *@
+@* <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> *@
+@* <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" *@
+@*       rel="stylesheet"> *@
+@* *@
+@* <link *@
+@*     href="~/css/site.css" *@
+@*     rel="stylesheet" type="text/css"/> *@
+
+@* <!-- TAILWIND --> *@
+@* *@
+@* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/daisyui.css" rel="stylesheet" type="text/css"/> *@
+@* <script src="https://cdn.tailwindcss.com"></script> *@
+@* <link href="https://cdn.jsdelivr.net/npm/daisyui@5.0.0-beta.1/themes.css" rel="stylesheet" type="text/css"/> *@
+@* *@
+@* <!-- HTMX --> *@
+@* *@
+@* <script src="~/lib/htmx/htmx.min.js"></script> *@
+@* <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
+@* *@
+@* <!-- ALPINEJS --> *@
+@* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/collapse@@3.x.x/dist/cdn.min.js"></script> *@
+@* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/persist@@3.x.x/dist/cdn.min.js"></script> *@
+@* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/focus@@3.x.x/dist/cdn.min.js"></script> *@
+@* <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/morph@@3.x.x/dist/cdn.min.js"></script> *@
+@* *@
+@* <script src="~/lib/alpinejs/cdn.min.js" defer></script> *@
+@* *@
+@* <!-- Icons  --> *@
+@* <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script> *@

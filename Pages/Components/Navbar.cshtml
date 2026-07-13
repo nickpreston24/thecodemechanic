@@ -1,0 +1,99 @@
+@page
+@model thecodemechanic.Pages.Components.Navbar
+<nav
+  x-data="{ 
+    scrolled: false 
+  }"
+  x-on:scroll.window="scrolled = (window.scrollY > 80)"
+  :class="{
+    'bg-space-black/95 backdrop-blur-lg shadow-sm': scrolled,
+    'bg-transparent': !scrolled
+  }"
+  class="northstar-nav transition-all duration-300 sticky top-0 z-[70]"
+>
+  <div class="max-lg:collapse">
+    <input id="navbar-1-toggle" class="peer hidden" type="checkbox" />
+    <label
+      for="navbar-1-toggle"
+      class="fixed inset-0 hidden max-lg:peer-checked:block"
+    ></label>
+    <div class="collapse-title navbar">
+      <div class="navbar-start">
+        <label
+          for="navbar-1-toggle"
+          class="btn btn-ghost hover:bg-space-midnight lg:hidden"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
+        </label>
+        <div class="flex-1">
+          <img
+            class="w-24 sm:w-32 md:w-40 lg:w-48"
+            src="/assets/img/Northstar_WhiteLogo_md.avif"
+          />
+        </div>
+      </div>
+      <div class="navbar-center hidden lg:flex">
+        <ul class="menu menu-horizontal px-1 gap-2 text-star">
+          <!-- <span class="navigation-links"></span> -->
+
+          <li><a href="/">Home</a></li>
+          <li>
+            <a href="/src/pages/capabilities/capabilites_grok.html"
+              >Capabilities</a
+            >
+          </li>
+          <li><a href="/src/pages/careers.html">Careers</a></li>
+          <li><a href="/src/pages/contact.html">Contact</a></li>
+          <li><a href="/src/pages/about/aboutus_grok.html">About</a></li>
+          <!-- <li><a href="/src/pages/admin.html">Admin</a></li> -->
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <!-- <input type="text" placeholder="Search" class="input input-bordered w-40 md:w-64 lg:w-auto" /> -->
+      </div>
+    </div>
+
+    <div class="collapse-content lg:hidden z-1">
+      <ul class="menu">
+        <li><a href="/">Home</a></li>
+        <li>
+          <a href="/src/pages/capabilities/capabilites_grok.html"
+            >Capabilities</a
+          >
+        </li>
+        <li><a href="/src/pages/careers.html">Careers</a></li>
+        <li><a href="/src/pages/contact.html">Contact</a></li>
+        <li><a href="/src/pages/about/aboutus_grok.html">About</a></li>
+        <!-- <li><a href="/src/pages/admin.html">Admin</a></li> -->
+      </ul>
+    </div>
+  </div>
+
+  <script type="module">
+    import links from "/src/components/links.html?raw";
+
+    console.log("links :>> " + links);
+
+    // const collection = document.getElementsByClassName("navigation-links");
+    const collection = document.getElementsByTagName("ul");
+
+    for (let i = 0; i < collection.length; i++) {
+      let el = collection[i];
+      el.style.backgroundColor = "red";
+      el.innerHTML = links;
+    }
+  </script>
+</nav>

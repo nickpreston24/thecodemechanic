@@ -4,117 +4,16 @@
     ViewData["Title"] = "Home page";
 }
 
-<div x-data="setup_main()" class="text-center">
-    <section class="h-screen scroll-y-auto">
-
-        <h1>Hello, there!</h1>
-
-        <badge debug="true">
-            My badge (should be black and white!)
-        </badge>
-
-        <accordion></accordion>
-
-        <bento-card>
-            <badge>Foo</badge>
-            <p class="badge badge-ghost">Bar</p>
-
-            <alpine-toggle-sample/>
-
-            <checkbox></checkbox>
-
-            <copytoclipboard/>
-        </bento-card>
-
-        @* Todo: Fix Cards going blank / hardcode the basic template *@
-        @* <card/> *@
 
 
-        <command/>
+<hero>
+    <h1 class="text-3xl">Welcome to my website!</h1>
 
-        <div x-show="false">
-            <banner/>
-        </div>
-
-        @* TODO: button is buggy and I think collides with real buttons
-            might need to rename to <pines-button>
-             *@
-        @* <button>Pines Button</button> *@
-
-        <breadcrumbs></breadcrumbs>
-        @* <editable-field-sample/> *@
-
-        <alert/>
-
-        <island method="get" page="Fubar"></island>
-
-        @* <island page="Sandbox/"/> *@
-
-
-        <divider>=====</divider>
-
-        <h1 class="text-5xl">Menus</h1>
-
-        <contextmenu/>
-        <dropdownmenu/>
-        <fullscreenmenu/>
-        <fullscreenmodal/>
-
-        <menubar/>
-
-        <divider>=====</divider>
-
-        @* <marquee/> *@
-        @* <marqueeadditional/> *@
-
-        <divider>=====</divider>
-
-        <hovercard/>
-
-        <divider>=====</divider>
-
-        <imagegallery/>
-
-        <divider>=====</divider>
-
-        <datepicker></datepicker>
-
-        <divider>=====</divider>
-
-
-    </section>
-
-
-    <section class="h-screen scroll-y-auto">
-
-
-        @* <monacoeditor></monacoeditor> *@
-
-        <navigationmenu/>
-
-        <pagination/>
-
-    </section>
-
-
-    <section x-show="false" class="h-screen">
-        <partial name="Shared/_UnderConstruction"></partial>
-
-    </section>
-</div>
-
-<script>
-    function setup_main() {
-
-    }
-</script>
-
-
-@* <hero> *@
-@*     <h1 class="text-3xl">Welcome to my website!</h1> *@
-@* *@
-@*     <modal btn-text="not working!" title="Welcome"> *@
-@*         <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>. *@
-@*         </p> *@
-@*     </modal> *@
-@* </hero> *@
+    <alpine-toggle-sample></alpine-toggle-sample>
+    <accordion></accordion>
+    
+    <modal btn-text="not working!" title="Welcome">
+        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.
+        </p>
+    </modal>
+</hero>
