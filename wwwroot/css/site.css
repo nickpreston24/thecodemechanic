@@ -1,23 +1,696 @@
-.anonymous-pro-regular {
-  font-family: "Anonymous Pro", serif;
-  font-weight: 400;
-  font-style: normal;
+@import "tailwindcss";
+@plugin "daisyui";
+@import "./daisy-ux.css";
+@import "../fonts/space-grotesk.css";
+
+[x-cloak] {
+    display: none !important;
 }
 
-.anonymous-pro-bold {
-  font-family: "Anonymous Pro", serif;
-  font-weight: 700;
-  font-style: normal;
+@theme {
+    /* Midnight space theme */
+    --color-space-black: #0a0a0a;
+    --color-space-midnight: #111827;
+    --color-space-deep: #1e2937;
+    --color-tech-blue: #11aaff;
+    --color-star: #e2e8f0;
+    --color-accent-cyan: #22d3ee;
+    --color-accent-purple: #a855f7;
+    --color-accent-teal: #14b8a6;
+
+    /* NSS theme (more blue / less green) */
+    --color-nss-bg-deep: #050b14;
+    --color-nss-bg-panel: #0b1622;
+    --color-nss-line: rgba(100, 100, 230, 0.16);
+    /* --color-nss-line: rgba(80, 180, 220, 0.16); */
+    --color-nss-cyan: #4ac8e8;
+    --color-nss-cyan-bright: #7adcf4;
+    --color-nss-cyan-dim: rgba(74, 200, 232, 0.12);
+    --color-nss-ink: #eaf3f5;
+    --color-nss-ink-dim: #9fb4bb;
+    --color-nss-ink-faint: #6b7d83;
+
 }
 
-.anonymous-pro-regular-italic {
-  font-family: "Anonymous Pro", serif;
-  font-weight: 400;
-  font-style: italic;
+@layer base {
+    body {
+        font-family: "Inter", system-ui, sans-serif;
+    }
+
+    h1,
+    h2,
+    h3 {
+        font-family: "Space Grotesk", sans-serif;
+    }
 }
 
-.anonymous-pro-bold-italic {
-  font-family: "Anonymous Pro", serif;
-  font-weight: 700;
-  font-style: italic;
+/* VIDEO */
+@keyframes slowZoom {
+    0%,
+    100% {
+        transform: scale(1.05);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+/* Your custom NorthStar styles */
+@layer components {
+    .northstar-nav {
+        @apply max-lg:collapse lg:mb-48 shadow-sm w-full rounded-md bg-transparent border-b border-star/20;
+    }
+
+    .northstar-brand {
+        @apply bg-space-deep text-white font-bold;
+    }
+
+    /* .saber-header {
+      @apply dark-saber text-6xl md:text-7xl lg:text-8xl font-display tracking-tighter text-star mb-6;
+    } */
+
+    .subheadline {
+        @apply text-xl md:text-2xl text-star/90 mb-12;
+    }
+
+    .header-1 {
+        @apply lg:text-5xl md:text-4xl sm:text-3xl font-bold text-tech-blue;
+    }
+
+    .paragraph-1 {
+        @apply py-2 bg-space-midnight/50 rounded-xl text-sm lg:text-lg md:text-base text-tech-blue;
+    }
+
+    .paragraph-2 {
+        @apply text-accent-cyan bg-space-midnight/40 rounded-2xl font-bold;
+    }
+
+    /* For any piped text on cards */
+    .pipes {
+        @apply lg:text-3xl md:text-2xl sm:text-xl font-bold;
+        font-family: "Space Grotesk", sans-serif;
+    }
+
+    div.navbar-center > ul > li > a {
+        @apply lg:text-2xl md:text-xl sm:text-base no-underline hover:underline;
+        /* @apply absolute left-0 bottom-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full */
+    }
+
+    /* NSS theme (Claude designed) */
+
+    .nss-body {
+        background:
+                radial-gradient(
+                        ellipse 1200px 700px at 15% -5%,
+                        rgba(74, 200, 232, 0.09),
+                        transparent 60%
+                ),
+                radial-gradient(
+                        ellipse 900px 600px at 100% 30%,
+                        rgba(74, 200, 232, 0.06),
+                        transparent 55%
+                ),
+                var(--color-nss-bg-deep);
+        color: var(--color-nss-ink);
+        font-family: var(--font-family-nss-sans, "Inter", system-ui, sans-serif);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header / Nav */
+    .nss-header {
+        @apply sticky top-0 z-50 flex items-center justify-between px-[6vw] py-[22px];
+        background: rgba(5, 11, 20, 0.78);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--color-nss-line);
+    }
+
+    .nss-logo {
+        @apply font-nss-serif text-[1.5rem] font-semibold tracking-[0.02em] text-nss-ink;
+    }
+
+    .nss-logo span {
+        color: var(--color-nss-cyan);
+    }
+
+    .nss-nav ul {
+        @apply flex gap-[34px] list-none;
+    }
+
+    .nss-nav a {
+        @apply text-[0.82rem] tracking-[0.12em] uppercase text-nss-ink-dim transition-colors duration-200;
+    }
+
+    .nss-nav a:hover,
+    .nss-nav a.active {
+        color: var(--color-nss-cyan-bright);
+    }
+
+    .nss-nav-cta {
+        @apply border border-nss-cyan text-nss-cyan-bright px-5 py-[9px] rounded text-[0.78rem] tracking-[0.1em] uppercase transition-all duration-200;
+    }
+
+    .nss-nav-cta:hover {
+        background: var(--color-nss-cyan-dim);
+        box-shadow: 0 0 22px rgba(74, 200, 232, 0.25);
+    }
+
+    /* Eyebrow */
+    .nss-eyebrow {
+        @apply font-nss-mono text-[0.78rem] tracking-[0.25em] uppercase text-nss-cyan inline-flex items-center gap-[10px] mb-[26px];
+    }
+
+    .nss-eyebrow::before,
+    .nss-eyebrow::after {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: var(--color-nss-cyan);
+        opacity: 0.5;
+    }
+
+    /* Hero */
+    .nss-hero {
+        @apply pt-[100px] pb-[70px] px-[6vw] max-w-[1200px] mx-auto text-center;
+    }
+
+    .nss-hero h1 {
+        @apply font-nss-serif font-medium text-nss-ink mx-auto;
+
+        font-size: clamp(2.4rem, 5.6vw, 4.6rem);
+        line-height: 1.08;
+        max-width: 920px;
+        margin-bottom: 22px;
+    }
+
+    .nss-hero h1 em {
+        font-style: italic;
+        color: var(--color-nss-cyan-bright);
+    }
+
+    .nss-hero p {
+        @apply max-w-[640px] mx-auto text-nss-ink-dim text-[1.08rem] font-light;
+    }
+
+    .nss-tagline {
+        @apply mt-[34px] font-nss-serif italic text-[2.5rem] text-nss-cyan tracking-[0.01em];
+    }
+
+    /* Section head */
+    .nss-section-head {
+        @apply max-w-[680px] mx-auto mb-14 text-center;
+    }
+
+    .nss-section-head h2 {
+        @apply font-nss-serif font-medium text-nss-ink;
+        /* todo: fix the clamp */
+        /* text-[clamp(1.9rem, 3.4vw, 2.7rem)] */
+    }
+
+    .nss-section-head p {
+        @apply text-nss-ink-dim mt-[14px] font-light;
+    }
+
+    /* Featured cards */
+    .nss-feature-card {
+        @apply relative grid grid-cols-1 gap-0 overflow-hidden rounded-lg border border-nss-line backdrop-blur-xl transition-all duration-300;
+        background: linear-gradient(
+                145deg,
+                rgba(15, 28, 38, 0.7),
+                rgba(8, 16, 24, 0.55)
+        );
+
+        display: grid;
+        position: relative;
+        grid-template-columns: 1fr;
+        overflow: hidden;
+        border-radius: 0.5rem;
+        /* lg:grid-cols-[1fr, 1.15fr] */
+    }
+
+    .nss-feature-card:hover {
+        border-color: rgba(74, 200, 232, 0.4);
+        transform: translateY(-3px);
+    }
+
+    .nss-feature-card.reverse {
+        /* @apply lg:grid-cols-[1.15fr, 1fr]; */
+        grid-template-columns: 1.15fr 1fr;
+    }
+
+    .nss-feature-card.reverse .nss-f-visual {
+        order: 2;
+    }
+
+    .nss-f-content {
+        @apply p-[54px_50px] flex flex-col justify-center;
+    }
+
+    .nss-f-index {
+        @apply font-nss-mono text-nss-cyan text-[0.78rem] tracking-[0.2em] mb-[18px];
+    }
+
+    .nss-f-content h3 {
+        @apply font-nss-serif font-medium text-[2.1rem] mb-[18px] text-nss-ink;
+    }
+
+    .nss-f-content p {
+        @apply text-nss-ink-dim font-light mb-[26px] text-[1rem];
+    }
+
+    .nss-f-list {
+        @apply flex flex-col gap-[13px];
+    }
+
+    .nss-f-list li {
+        @apply flex gap-3 text-[0.92rem] text-nss-ink items-start;
+    }
+
+    .nss-f-list li::before {
+        content: "›";
+        color: var(--color-nss-cyan);
+        font-weight: 700;
+        font-size: 1.1rem;
+        line-height: 1;
+    }
+
+    .nss-f-visual {
+        @apply relative min-h-[340px] flex items-center justify-center border-l border-nss-line;
+        background:
+                radial-gradient(
+                        circle at 30% 30%,
+                        rgba(74, 200, 232, 0.18),
+                        transparent 60%
+                ),
+                repeating-linear-gradient(
+                        115deg,
+                        rgba(74, 200, 232, 0.05) 0px,
+                        rgba(74, 200, 232, 0.05) 1px,
+                        transparent 1px,
+                        transparent 34px
+                );
+    }
+
+    .nss-feature-card.reverse .nss-f-visual {
+        @apply border-l-0 border-r border-nss-line;
+    }
+
+    .nss-f-glyph {
+        @apply font-nss-mono text-[5.5rem] text-nss-cyan/20 tracking-[-0.02em];
+    }
+
+    /* Cap cards */
+    .nss-cap-grid {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+    }
+
+    .nss-cap-card {
+        @apply bg-white/[0.025] border border-nss-line rounded-lg p-[38px_32px] backdrop-blur-xl transition-all duration-300;
+    }
+
+    .nss-cap-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(74, 200, 232, 0.35);
+        background: rgba(74, 200, 232, 0.04);
+    }
+
+    .nss-cap-icon {
+        @apply w-[46px] h-[46px] border border-nss-cyan rounded-full flex items-center justify-center font-nss-mono text-nss-cyan-bright text-[1.1rem] mb-[22px];
+    }
+
+    .nss-cap-card h4 {
+        @apply font-nss-serif font-medium text-[1.4rem] mb-3 text-nss-ink;
+    }
+
+    .nss-cap-card p {
+        @apply text-nss-ink-dim text-[0.93rem] font-light;
+    }
+
+    /* Process */
+    .nss-process {
+        @apply border-y border-nss-line py-20 px-[6vw];
+    }
+
+    .nss-process-grid {
+        @apply max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0;
+    }
+
+    .nss-process-step {
+        @apply px-[26px] relative;
+    }
+
+    .nss-process-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 18px;
+        right: -1px;
+        width: 1px;
+        height: 40px;
+        background: var(--color-nss-line);
+    }
+
+    .nss-process-step .pn {
+        @apply font-nss-mono text-nss-cyan text-[0.8rem] mb-[14px];
+    }
+
+    .nss-process-step h5 {
+        @apply font-nss-serif text-[1.2rem] mb-2.5 text-nss-ink font-medium;
+    }
+
+    .nss-process-step p {
+        @apply text-[0.85rem] text-nss-ink-faint font-light;
+    }
+
+    /* CTA */
+    .nss-cta-band {
+        @apply text-center py-[100px] px-[6vw];
+        background: radial-gradient(
+                ellipse 700px 400px at 50% 0%,
+                rgba(74, 200, 232, 0.1),
+                transparent 70%
+        );
+    }
+
+    .nss-cta-band h2 {
+        @apply font-nss-serif font-medium mb-[18px];
+
+        /* todo: fix the clamp */
+        /* text-[clamp(2rem, 4vw, 3rem)] */
+    }
+
+    .nss-cta-band p {
+        @apply text-nss-ink-dim max-w-[560px] mx-auto mb-9 font-light;
+    }
+
+    .nss-cta-buttons {
+        @apply flex gap-[18px] justify-center flex-wrap;
+    }
+
+    /* Buttons (namespaced) */
+    .nss-btn-primary {
+        @apply bg-nss-cyan text-nss-bg-deep font-semibold px-[34px] py-[15px] rounded text-[0.85rem] tracking-[0.08em] uppercase transition-all duration-200;
+    }
+
+    .nss-btn-primary:hover {
+        box-shadow: 0 0 30px rgba(74, 200, 232, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .nss-btn-ghost {
+        @apply border border-nss-line text-nss-ink-dim px-[34px] py-[15px] rounded text-[0.85rem] tracking-[0.08em] uppercase transition-all duration-200;
+    }
+
+    .nss-btn-ghost:hover {
+        border-color: var(--color-nss-cyan);
+        color: var(--color-nss-cyan-bright);
+    }
+
+    /* About-specific */
+    .nss-story {
+        @apply grid grid-cols-1 gap-[60px] items-center;
+        /* lg:grid-cols-[0.9fr, 1.1fr] */
+        grid-template-columns: 0.9fr 1.1fr;
+    }
+
+    .nss-story-visual {
+        @apply min-h-[380px] rounded-lg border border-nss-line flex items-center justify-center backdrop-blur-xl;
+        background:
+                radial-gradient(
+                        circle at 30% 30%,
+                        rgba(74, 200, 232, 0.16),
+                        transparent 60%
+                ),
+                repeating-linear-gradient(
+                        115deg,
+                        rgba(74, 200, 232, 0.05) 0px,
+                        rgba(74, 200, 232, 0.05) 1px,
+                        transparent 1px,
+                        transparent 34px
+                ),
+                linear-gradient(145deg, rgba(15, 28, 38, 0.7), rgba(8, 16, 24, 0.55));
+    }
+
+    .nss-story-visual span {
+        @apply font-nss-serif italic text-[1.6rem] text-nss-cyan-bright/70 text-center px-10;
+    }
+
+    .nss-customer-band {
+        @apply border-y border-nss-line;
+        background: radial-gradient(
+                ellipse 900px 500px at 50% 0%,
+                rgba(74, 200, 232, 0.08),
+                transparent 70%
+        );
+    }
+
+    .nss-customer-inner {
+        @apply max-w-[1000px] mx-auto text-center;
+    }
+
+    .nss-customer-inner h2 em {
+        font-style: italic;
+        color: var(--color-nss-cyan-bright);
+    }
+
+    .nss-commit-grid {
+        @apply grid grid-cols-1 md:grid-cols-3 gap-px bg-nss-line border border-nss-line rounded-lg overflow-hidden;
+    }
+
+    .nss-commit-item {
+        @apply bg-[#081018]/60 p-[42px_32px] text-left;
+    }
+
+    .nss-commit-item .c-index {
+        @apply font-nss-mono text-nss-cyan text-[0.78rem] tracking-[0.15em] mb-4;
+    }
+
+    .nss-commit-item h5 {
+        @apply font-nss-serif font-medium text-[1.3rem] mb-3 text-nss-ink;
+    }
+
+    .nss-commit-item p {
+        @apply text-[0.92rem] text-nss-ink-dim font-light;
+    }
+
+    .nss-quote-block {
+        @apply text-center max-w-[820px] mx-auto mt-[60px] pt-[50px] border-t border-nss-line;
+    }
+
+    .nss-quote-block p {
+        @apply font-nss-serif italic text-[1.5rem] leading-[1.5] text-nss-ink;
+    }
+
+    .nss-quote-block p span {
+        color: var(--color-nss-cyan-bright);
+    }
+
+    .nss-quote-block .attribution {
+        @apply mt-5 font-nss-mono text-[0.78rem] tracking-[0.15em] uppercase text-nss-ink-faint;
+    }
+
+    /* Footer */
+    .nss-footer {
+        @apply border-t border-nss-line py-10 px-[6vw] flex justify-between items-center flex-wrap gap-4;
+    }
+
+    .nss-footer .logo {
+        @apply text-[1.1rem];
+    }
+
+    .nss-footer p {
+        @apply text-[0.8rem] text-nss-ink-faint font-nss-mono;
+    }
+}
+
+/* Limit themes to keep it tiny (huge win) */
+@plugin "daisyui" {
+    themes: light, dark;
+    /* add more only if you need them */
+}
+
+@layer utilities {
+    .gold-lightsaber-glow {
+        /* White core line */
+        background-color: #ffffff;
+        /* Stacked gold glow effect */
+        box-shadow:
+                0 0 2px #fff,
+                0 0 6px #ffd700,
+                0 0 15px #ffaa00,
+                0 0 25px #ff8800;
+    }
+}
+
+@layer components {
+    /* Define the reusable class and the navbar target simultaneously */
+    .navlink,
+    .navbar-center > ul > li > a {
+        /* Force browser/frameworks to drop their default underlines */
+        text-decoration: none !important;
+
+        @apply relative inline-block no-underline transition-colors duration-300;
+
+        /* Create the underline element automatically */
+        &::after {
+            content: "";
+            @apply absolute left-0 bottom-0 w-0 h-[3px] transition-all duration-300 bg-white;
+            /* Apply your lightsaber shadow glow */
+            box-shadow:
+                    0 0 2px #fff,
+                    0 0 6px #ffd700,
+                    0 0 15px #ffaa00,
+                    0 0 25px #ff8800;
+        }
+
+        /* Expand the saber underline on hover */
+        &:hover::after {
+            @apply w-full;
+        }
+    }
+
+    /* Optional: Keep your Activate Saber background styling */
+    /* .saber-btn {
+      @apply bg-gray-900 text-white p-3 rounded;
+    } */
+
+    .btn-saber {
+        text-decoration: none !important;
+
+        @apply relative inline-block no-underline transition-colors duration-300;
+
+        /* Create the underline element automatically */
+        &::after {
+            content: "";
+            @apply absolute left-0 bottom-0 w-0 h-[3px] transition-all duration-300 bg-white;
+            /* Apply your lightsaber shadow glow */
+            box-shadow:
+                    0 0 2px #fff,
+                    0 0 6px #ffd700,
+                    0 0 15px #ffaa00,
+                    0 0 25px #ff8800;
+        }
+
+        /* Expand the saber underline on hover */
+        &:hover::after {
+            @apply w-full;
+        }
+    }
+}
+
+/*****
+  CUSTOM STYLES
+*/
+
+/* Lightsabers */
+
+.blue-saber {
+    color: #ffffff;
+    text-shadow:
+            0 0 1px #fff,
+            0 0 3px #fff,
+            0 0 20px #007bff,
+            0 0 30px #007bff,
+            0 0 40px #007bff,
+            0 0 55px #007bff,
+            0 0 75px #007bff;
+    color: #ffffff;
+}
+
+.gold-saber {
+    color: #ffffff;
+    text-shadow:
+            0 0 1px #fff,
+            0 0 3px #ffd700,
+            0 0 20px #ffd700,
+            0 0 30px #ffaa00,
+            0 0 40px #ffaa00 /* 0 0 55px #ff8800, */ /* 0 0 75px #ff8800 */;
+
+    /* 0 0 1px #fff,
+      0 0 3px #fff,
+      0 0 20px var(--color-space-deep),
+      0 0 30px var(--color-space-deep),
+      0 0 40px var(--color-space-deep),
+      0 0 55px var(--color-space-deep),
+      0 0 75px var(--color-space-deep); */
+    color: #ffffff;
+}
+
+.dark-saber {
+    color: #ffffff;
+    text-shadow:
+            0 0 1px #fff,
+            0 0 3px #fff,
+            0 0 20px var(--color-space-deep),
+            0 0 30px var(--color-space-deep),
+            0 0 40px var(--color-space-deep),
+            0 0 55px var(--color-space-deep),
+            0 0 75px var(--color-space-deep);
+    color: #ffffff;
+}
+
+/* 
+.blue-lightsaber {
+  color: #ffffff;
+  text-shadow:
+    0 0 1px #fff,
+    0 0 3px #fff,
+    0 0 20px #363ef0,
+    0 0 30px #363ef0,
+    0 0 40px #363ef0,
+    0 0 55px #363ef0,
+    0 0 75px #363ef0;
+  color: #ffffff;
+} */
+
+.green-lightsaber {
+    color: #ffffff;
+    text-shadow:
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #fff,
+            0 0 20px #49ff18,
+            0 0 30px #49ff18,
+            0 0 40px #49ff18,
+            0 0 55px #49ff18,
+            0 0 75px #49ff18;
+    color: #ffffff;
+}
+
+.sith-lightsaber {
+    /*@apply*/
+    color: #ffffff;
+    text-shadow:
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #fff,
+            0 0 20px #f11,
+            0 0 30px #f11,
+            0 0 40px #f11,
+            0 0 55px #f11,
+            0 0 75px #f11;
+    color: #ffffff;
+}
+
+/* flex and grid helpers */
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+.stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

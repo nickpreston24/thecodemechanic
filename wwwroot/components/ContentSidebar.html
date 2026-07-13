@@ -1,0 +1,90 @@
+<div x-data="{ localOpen: false }" class="relative z-50">
+
+    <template x-teleport="body">
+        <div x-show="$store.content.modalOpen" @keydown.window.escape="$store.content.cancelEdit()"
+             class="relative z-[99]" x-effect="localOpen = $store.content.modalOpen">
+
+            <!-- Backdrop -->
+            <div x-show="$store.content.modalOpen" x-transition.opacity.duration.300ms
+                 @click="$store.content.cancelEdit()" class="fixed inset-0 bg-black/60">
+            </div>
+
+            <!-- Slide-over -->
+            <div class="overflow-hidden fixed inset-0">
+                <div class="overflow-hidden absolute inset-0">
+                    <div class="flex fixed inset-y-0 right-0 pt-11 pl-10 max-w-full">
+                        <div x-show="$store.content.modalOpen" @click.away="$store.content.cancelEdit()"
+                             x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700"
+                             x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+                             x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700"
+                             x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full"
+                             class="w-screen max-w-md">
+
+                            <div class="flex h-full flex-col overflow-y-auto border-l shadow-2xl"
+                                 style="background-color: #111827; border-color: rgba(226, 232, 240, 0.1);">
+
+                                <!-- Header -->
+                                <div class="px-5 pt-5">
+                                    <div class="flex items-start justify-between pb-2">
+                                        <div>
+                                            <h2 class="text-base font-semibold" style="color: #e2e8f0;">Edit Content
+                                            </h2>
+                                            <p class="font-mono text-xs" style="color: #64748b;"
+                                               x-text="$store.content.editingKey"></p>
+                                        </div>
+                                        <button @click="$store.content.cancelEdit()"
+                                                class="flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors"
+                                                style="border-color: rgba(226, 232, 240, 0.2); color: #94a3b8;">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Body -->
+                                <div class="flex-1 space-y-5 px-5 pt-4 pb-6">
+
+                                    <!-- Markdown -->
+                                    <div>
+                                        <label class="mb-1 block text-sm font-medium"
+                                               style="color: #94a3b8;">Markdown</label>
+                                        <textarea x-model="$store.content.draft" rows="10"
+                                                  class="w-full rounded-md border p-3 font-mono text-sm focus:outline-none"
+                                                  style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
+                                                  placeholder="Enter markdown..."></textarea>
+                                    </div>
+
+                                    <!-- Preview -->
+                                    <div>
+                                        <label class="mb-1 block text-sm font-medium"
+                                               style="color: #94a3b8;">Preview</label>
+                                        <div class="prose prose-sm max-w-none min-h-[120px] rounded-md border p-4"
+                                             style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
+                                             x-html="$store.content.renderMarkdown($store.content.draft)">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="flex justify-end gap-3 border-t px-5 py-4"
+                                     style="border-color: rgba(226, 232, 240, 0.1);">
+                                    <button @click="$store.content.cancelEdit()"
+                                            class="rounded-md border px-4 py-2 text-sm transition-colors"
+                                            style="border-color: rgba(226, 232, 240, 0.2); color: #94a3b8;">
+                                        Cancel
+                                    </button>
+                                    <button @click="$store.content.saveEdit()"
+                                            class="rounded-md px-4 py-2 text-sm font-medium transition-colors"
+                                            style="background-color: #11aaff; color: white;">
+                                        Save Changes
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>

@@ -1,19 +1,128 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+  ViewData["Title"] = "Home page";
 }
 
 
 
-<hero>
-    <h1 class="text-3xl">Welcome to my website!</h1>
+<div x-data class="bg-space-black text-star">
+  <!-- HERO + NAVBAR OVERLAY -->
+  <section class="relative min-h-[100dvh] flex flex-col overflow-hidden">
+    <!-- Video Background -->
+    @* <video *@
+    @*   src="https://pocketbase-railway-production-cc55.up.railway.app/api/files/su3irbyamgdccqb/1zrf31q0d4psqjl/lakeview_stars_S67OtRY2IS.mp4" *@
+    @*   class="absolute inset-0 w-full h-full object-cover" *@
+    @*   autoplay *@
+    @*   loop *@
+    @*   muted *@
+    @*   playsinline *@
+    @* ></video> *@
 
-    <alpine-toggle-sample></alpine-toggle-sample>
-    <accordion></accordion>
-    
-    <modal btn-text="not working!" title="Welcome">
-        <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.
-        </p>
-    </modal>
-</hero>
+    <!-- Dark Overlay + Bottom Fade -->
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-space-black/10 via-space-black/20 to-space-black/10"
+    ></div>
+
+    <div
+      class="absolute bottom-0 left-0 right-0 h-[35vh] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none"
+    ></div>
+
+    <!-- NAVBAR -->
+    <div
+      id="navbar-placeholder"
+      class="absolute top-0 left-0 right-0 z-[60]"
+    ></div>
+
+    <!-- HERO CONTENT -->
+    <div class="relative z-10 flex flex-1 items-center justify-center pt-16">
+      <div class="px-6 max-w-5xl mx-auto text-center">
+        <div class="stack gap-4 mb-8">
+          <img
+            class="lg:w-lg"
+            src=""
+            alt="CodeMechanic"
+          />
+          <p class="pipes blue-saber">Foo bar</p>
+
+          <p x-edit="content.cm-tagline"></p>
+
+          <div
+            class="flex flex-col items-center sm:flex-row gap-4 justify-center mt-6"
+          >
+            <a
+              href="#capabilities-placeholder"
+              class="btn btn-md lg:btn-lg w-50 bg-tech-blue btn-saber text-xl"
+            >
+              LEARN MORE
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- GALAXY SECTION -->
+    <section class="relative bg-black -mt-20 overflow-hidden border-0">
+      <span id="capability-card"></span>
+
+      <!-- Curved Top Divider (bleed effect) -->
+      <!-- <div class="relative -top-0 left-0 right-0 h-48 bg-transparent">
+      <svg class="w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <path fill="#000000" fill-opacity="0.95"
+          d="M0,64L80,80C160,96,320,128,480,122.7C640,117,800,75,960,69.3C1120,64,1280,96,1360,112L1440,128L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z">
+        </path>
+      </svg>
+    </div> -->
+
+      <!-- Galaxy Container -->
+      <div
+        id="galaxy-placeholder"
+        class="relative w-full h-256 overflow-hidden clip-path-custom"
+      ></div>
+      <!-- <div id="galaxy-placeholder" class="relative w-full h-[620px] overflow-hidden clip-path-custom"></div> -->
+
+      <!-- Capabilities Content - Overlaid -->
+
+      <span id="capabilities-placeholder"></span>
+    </section>
+
+    <section class="h-48 bg-black gap-2">
+      <!-- <div class="parent">
+      <h2>Parent</h2>
+      <div class="child child-1">
+        <h2>Child 1</h2>
+      </div>
+      <div class="child child-2">
+        <h2>Child 2</h2>
+      </div>
+    </div> -->
+    </section>
+
+    <span id="our-mission-placeholder"></span>
+
+    <div class="center h-140 bg-transparent">
+      <span id="ticker-placeholder"></span>
+    </div>
+
+    <section class="h-140 flex flex-col justify-center bg-transparent">
+      <span id="marquee-placeholder"></span>
+    </section>
+  </main>
+
+
+</div>
+
+
+@* <hero> *@
+@*     <h1 class="text-3xl">Welcome to my website!</h1> *@
+@* *@
+@*     <alpine-toggle-sample></alpine-toggle-sample> *@
+@*     <accordion></accordion> *@
+@*      *@
+@*     <modal btn-text="not working!" title="Welcome"> *@
+@*         <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>. *@
+@*         </p> *@
+@*     </modal> *@
+@* </hero> *@

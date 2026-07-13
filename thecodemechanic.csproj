@@ -25,12 +25,21 @@
 
 
     <ItemGroup>
+        <!-- Watch C# logic files -->
         <Watch Include="**/*.cshtml.cs"/>
         <Watch Include="**/*.cs"/>
-        <Watch Include="img/*"/>
-        <Watch Include="js/*.js"/>
+
+        <!-- Watch Static Assets -->
+        <Watch Include="wwwroot/js/site.js"/>
+        <Watch Include="wwwroot/js/plugins/*.js"/>
+        <Watch Include="wwwroot/js/stores/*.js"/>
+        <Watch Include="wwwroot/css/site.css"/>
+        <Watch Include="wwwroot/img/*"/>
+        <Watch Include="importmap.json"/>
+
+        <!-- Watch Environment files -->
         <Watch Include=".env"/>
-        <Watch Include="css/site.css"/>
+
     </ItemGroup>
 
     <ItemGroup>
@@ -39,7 +48,6 @@
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.8"/>
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.5"/>
         <PackageReference Include="CodeMechanic.FileSystem" Version="2.0.12"/>
-        <PackageReference Include="CodeMechanic.Razorhat" Version="1.0.2"/>
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.6"/>
         <PackageReference Include="CodeMechanic.RegularExpressions" Version="1.0.11"/>
         <PackageReference Include="CodeMechanic.Shargs" Version="1.0.6"/>
@@ -72,5 +80,48 @@
     <!--  <ItemGroup>-->
     <!--    <Compile Include=".sqil/**/*"/>-->
     <!--  </ItemGroup>-->
+
+
+    <!--    Conditional Nugets / Submodules 
+    
+    This section is intended to demonstrate the "Chungolith" concept.
+    
+    We should be able to toggle individual Nuget packages and submodules at will, regardless of our packages' maturity (semver).
+    
+    By having a quick toggle between the two, we can reduce the dev tendency to daisy-chain submodules or wait on Nuget Packages or specific branches because:
+    1. Git branches are free.
+    2. It's not hard to submodule something in a new folder, Nugetize it and send out a version 1.0.0 and immediately test it, then decide later we don't want it.  
+    
+    These should be TRIVIAL.
+    
+    I call it the Chungolith, because I'm intentionally creating submodules and 'promoting' them to Nuget packages once they are mature.
+    
+    When I've combined subs into a monorepo comprised of those subs, I was able to churn out 20+ Nuget packages with MINIMAL DEPENDENCY on one another,
+    AND reduced my time to production.  Submodules may also (optionally) live outside of their host monorepo for lighter dev work, security, etc.
+    
+    The Chungolith takes advantage of git submodules and Nuget's high availability to create an infinite dev loop that makes Agile users jealous.
+    
+    -->
+
+    <!--     Toggle Submodule mode vs Nuget mode.-->
+    <PropertyGroup>
+        <UseOnlySubmodules Condition="'$(UseOnlySubmodules)' == ''">false</UseOnlySubmodules>
+    </PropertyGroup>
+
+    <!--  NUGET-ONLY (more mature code)  Any nuget package in this item group will be used instead of the submodule of the same name!-->
+    <ItemGroup Condition="'$(UseOnlySubmodules)' == 'false'">
+        <!--        <PackageReference Include="CodeMechanic.Bash" Version="1.0.6" />-->
+    </ItemGroup>
+
+    <!--  SUBMODULES-ONLY (less mature code)  Any submodule in this item group will be used instead of the Nuget Package of the same name!-->
+    <ItemGroup Condition="'$(UseOnlySubmodules)' == 'true'">
+        <!--        <ProjectReference Include="..\CodeMechanic.Bash\CodeMechanic.Bash.csproj" />-->
+        <ProjectReference Include="..\CodeMechanic.Razorhat\CodeMechanic.Razorhat.csproj"/>
+
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="wwwroot\components\ContentSidebar.html"/>
+    </ItemGroup>
+
 
 </Project>

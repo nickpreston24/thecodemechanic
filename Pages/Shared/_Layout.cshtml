@@ -1,5 +1,5 @@
-﻿@using CodeMechanic.Types
-@using NavbarLink = thecodemechanic.Pages.Shared.Components.NavbarLink
+﻿@using System.Text.Json
+@using CodeMechanic.Razorhat
 <!DOCTYPE html>
 <html data-theme="dracula" lang="en">
 <head>
@@ -10,37 +10,30 @@
 
     <title>@ViewData["Title"] - thecodemechanic</title>
 
-    @inject CodeMechanic.Razorhat.ImportMap ImportMap
+    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        window.AppConfig = @Html.Raw(JsonSerializer.Serialize(new
+                           {
+                               pocketbaseUrl = Environment.GetEnvironmentVariable("POCKETBASE_URL")
+                           }));
+    </script>
+
+    @inject ImportMap ImportMap
 
     @Html.Raw(ImportMap.RenderAsScripts(debug: true))
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
-   
+    <link href="css/output.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
-<body class="anonymous-pro-regular" x-data="setup_layout()">
+<body class="anonymous-pro-regular">
 
 <header>
-    
-    <cm-navbar></cm-navbar>
-    
-    
-    @* <navbar links="@(new List<NavbarLink>() *@
-    @*                { *@
-    @*                    new NavbarLink("Home", "/"), *@
-    @*                    new NavbarLink("Blog", "/Blog"), *@
-    @*                    // new NavbarLink("Sandbox", "/Sandbox"), *@
-    @*                    // new NavbarLink("Storybook", "/Storybook"), *@
-    @*                    new NavbarLink("Samples", "").With(l => *@
-    @*                    { *@
-    @*                        // todo: make this recursively render. *@
-    @*                        l.children.Add(new NavbarLink("Tables", "/Samples/Tables")); *@
-    @*                        l.children.Add(new NavbarLink("JustDoIt", "/Samples/JustDoIt")); *@
-    @*                    }), *@
-    @*                })"> *@
-    @* </navbar> *@
+    <cm-navbar>foobar navbar</cm-navbar>
 </header>
 
 <div class="min-h-screen">
@@ -49,18 +42,43 @@
     </main>
 </div>
 
+<span id="modal-placeholder"></span>
+
 <partial name="_Footer"/>
 
 @await RenderSectionAsync("Scripts", required: false)
-<script>
-    function setup_layout() {
-        return {}
+
+<script type="module" src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+<script type="module">
+    const modalHtml = await fetch("/components/ContentSidebar.html")
+        .then(r => r.text());
+
+    const modalPlaceholder = document.getElementById("modal-placeholder");
+    modalPlaceholder.innerHTML = modalHtml;
+
+    if (window.Alpine) {
+        window.Alpine.initTree(modalPlaceholder);
     }
 </script>
+
+@* <script type="module"> *@
+@*     // Per-page component loading (stays local to index.html)         *@
+@*     import modalHtml from "../../Pages/Components/ContentSidebar.html?raw"; *@
+@* *@
+@*     // Inject + initialize modal *@
+@*     const modalPlaceholder = document.getElementById("modal-placeholder"); *@
+@*     modalPlaceholder.innerHTML = modalHtml; *@
+@* *@
+@*     if (window.Alpine) { *@
+@*         window.Alpine.initTree(modalPlaceholder); *@
+@*     } *@
+@* </script> *@
+
 </body>
 </html>
-
-
 
 
 @* ============== PRE-IMPORT MAP ================= *@

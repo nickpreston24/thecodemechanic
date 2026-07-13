@@ -11,6 +11,8 @@ internal class Program
 {
     static async Task Main(string[] args)
     {
+        DotEnv.Load();
+
         var arguments = new ArgsMap(args);
 
         var logger = new LoggerConfiguration()
@@ -33,7 +35,6 @@ internal class Program
     }
 
 
-
     static async Task RunAsCli(ArgsMap arguments, Logger logger)
     {
         logger.Information("Setting up cli");
@@ -51,10 +52,10 @@ internal class Program
 
         // Add services to the container.
         builder.Services.AddRazorPages();
-        builder.UseImportMap(debug: false);
         builder.Services.AddHydro();
         builder.Services.AddSingleton(argsMap);
         builder.Services.AddSingleton<Logger>(logger);
+        builder.Services.AddSingleton<ImportMap>();
 
         var app = builder.Build();
 
@@ -96,25 +97,23 @@ internal class Program
     }
 
 
-
-
-    private static async ValueTask CreateToolsDir()
-    {
-        var user_profile =
-            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-
-        string dotnet_tools_dir = Path
-            .Combine(user_profile, ".dotnet/tools", ".cm")
-            .Replace("\\", "/");
-
-        Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
-
-        // await $"ls {dotnet_tools_dir}".Bash();
-
-        var fi = new SaveFile("foo")
-            .To(dotnet_tools_dir)
-            .As("test.txt", debug: false);
-
-        // await $"ls {fi.Directory}".Bash();
-    }
+    // private static async ValueTask CreateToolsDir()
+    //      {
+    //          var user_profile =
+    //              Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+    //  
+    //          string dotnet_tools_dir = Path
+    //              .Combine(user_profile, ".dotnet/tools", ".cm")
+    //              .Replace("\\", "/");
+    //  
+    //          Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
+    //  
+    //          // await $"ls {dotnet_tools_dir}".Bash();
+    //  
+    //          var fi = new SaveFile("foo")
+    //              .To(dotnet_tools_dir)
+    //              .As("test.txt", debug: false);
+    //  
+    //          // await $"ls {fi.Directory}".Bash();
+    //      }
 }

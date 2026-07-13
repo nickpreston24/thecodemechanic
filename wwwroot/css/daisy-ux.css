@@ -1,0 +1,48 @@
+@layer components {
+    /* =============================================
+       TEMPORARY SANDBOX / UX DEMO HELPERS
+       DaisyUI-inspired shortcuts for Northstar site
+       Single-class magic for quick previews.
+       ============================================= */
+
+    .daisy-card {
+        @apply card bg-base-100 shadow-sm rounded-box;
+    }
+
+    /* Direct children get card-body treatment */
+    .daisy-card > :not(figure):not(.card-actions) {
+        @apply card-body;
+    }
+
+    /* Headings get card-title styling */
+    .daisy-card h1,
+    .daisy-card h2,
+    .daisy-card h3,
+    .daisy-card .card-title {
+        @apply card-title;
+    }
+
+    /* Figure / image support */
+    .daisy-card > figure {
+        @apply image-full;
+    }
+
+    .daisy-card > figure img {
+        @apply w-full h-full object-cover;
+    }
+
+    /* Default content spacing */
+    .daisy-card > p {
+        @apply mb-4 last:mb-0;
+    }
+
+    /* Inner div wrappers */
+    .daisy-card > div {
+        @apply card-body;
+    }
+
+    /* Pricing variant */
+    .daisy-pricing-card {
+        /* @apply daisy-card w-full max-w-md; */
+    }
+}

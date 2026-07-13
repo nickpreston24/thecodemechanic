@@ -13,7 +13,7 @@
       "cdn": "https://cdn.jsdelivr.net/npm/alpinejs@3.15.3/dist/cdn.min.js",
       "repo": "https://github.com/alpinejs/alpine",
       "defer": true,
-      "enabled": true
+      "enabled": false
     },
     {
       "name": "alpinejs-module",
@@ -21,7 +21,8 @@
       "cdn": "https://cdn.jsdelivr.net/npm/alpinejs@3.15.3/dist/module.esm.min.js",
       "repo": "https://github.com/alpinejs/alpine",
       "defer": true,
-      "enabled": false
+      "enabled": true,
+      "type": "Module"
     },
     {
       "name": "alpine-collapse",

@@ -1,0 +1,105 @@
+@page
+@model thecodemechanic.Pages.Admin
+
+@{
+    // Layout = null;
+}
+
+<!-- HERO + NAVBAR OVERLAY -->
+<section class="relative min-h-[85dvh] flex flex-col overflow-hidden"> <!-- Reduced from 100dvh -->
+
+
+    <div class='hero min-h-[30rem] rounded bg-base-200'>
+        <div class='text-center hero-content'>
+            <div class='max-w-md'>
+                <h3 class='text-5xl font-bold'>Admin Login</h3>
+
+                <div x-data="{ 
+        email: '', 
+        password: '', 
+        error: '', 
+        loggingIn: false 
+     }" class="max-w-sm rounded-lg border bg-transparent p-4 shadow-sm">
+
+                    @* dev *@
+
+                    <pre x-text="email"></pre>
+                    <pre x-text="!!password"></pre>
+                    <pre x-text="error"></pre>
+                    <pre x-text="loggingIn"></pre>
+
+
+                    <!-- When NOT logged in -->
+                    <template x-if="!$store?.content?.isAuthenticated">
+                        <div>
+
+                            <input type="email" x-model="email" placeholder="Email"
+                                   class="mb-2 w-full rounded border px-3 py-2 text-sm">
+
+                            <input type="password" x-model="password" placeholder="Password"
+                                   class="mb-3 w-full rounded border px-3 py-2 text-sm">
+
+                            <span class="btn" @@click="async () => {
+          loggingIn = true;
+          error = '';
+          const result = await $store.content.login(email, password);
+          if (!result.success) error = result.error;
+          loggingIn = false;
+        }" :disabled="loggingIn" class="w-full rounded bg-neutral-900 py-2 text-sm text-white disabled:opacity-60">
+                                <span x-text="loggingIn ? 'Logging in...' : 'Login as Admin'"></span>
+                            </span>
+
+                            <div x-show="error" class="mt-2 text-xs text-red-600" x-text="error"></div>
+                        </div>
+                    </template>
+
+                    <!-- When LOGGED IN -->
+                    <template x-if="$store?.content?.isAuthenticated">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs text-neutral-500">Logged in as</div>
+                                    <div class="font-medium text-sm" x-text="$store.content.currentUser?.email">
+                                    </div>
+                                </div>
+                                <span x-show="$store?.content?.isAdmin"
+                                      class="rounded bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                                    Admin
+                                </span>
+                            </div>
+
+                            <span class="btn" @@click="$store.content.logout()"
+                                  class="btn btn-secondary w-full rounded border border-neutral-300 py-2 text-md  hover:bg-neutral-500">
+                                Logout
+                            </span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <h1>Sign in to begin editing</h1>
+    <br/>
+
+    <h2>The following is here to test your editing powers:</h2>
+
+
+    <p x-edit="content.admin.paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at autem
+        cupiditate doloribus, eligendi incidunt
+        magnam minus quae tempora. Atque cum dolore laboriosam quos tempora. Ab beatae neque quibusdam temporibus!
+    </p>
+
+    <p x-edit="content.capabilities-ai-text">
+        Designing and deploying production-grade AI systems tailored to IC
+        and DoD mission requirements. From model selection and fine-tuning
+        to secure pipeline architecture and MLOps integration at scale.
+    </p>
+
+
+</section>
+
+
+
+
