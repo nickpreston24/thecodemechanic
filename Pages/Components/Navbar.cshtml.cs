@@ -1,5 +1,3 @@
-using Drip.UI;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace thecodemechanic.Pages.Components;

@@ -2,7 +2,7 @@
 
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
 
@@ -68,20 +68,6 @@
         <PackageReference Include="Vogen" Version="7.0.4"/>
     </ItemGroup>
 
-
-    <!--  <Target Name="DripUIBuild" BeforeTargets="BeforeBuild">-->
-    <!--    <Exec Command="bash ../Drip.UI/rebuild.sh"/>-->
-    <!--  </Target>-->
-
-    <ItemGroup>
-        <!--    <ProjectReference Include="..\Drip.UI\Drip.UI.csproj" />-->
-    </ItemGroup>
-
-    <!--  <ItemGroup>-->
-    <!--    <Compile Include=".sqil/**/*"/>-->
-    <!--  </ItemGroup>-->
-
-
     <!--    Conditional Nugets / Submodules 
     
     This section is intended to demonstrate the "Chungolith" concept.
@@ -110,12 +96,11 @@
 
     <!--  NUGET-ONLY (more mature code)  Any nuget package in this item group will be used instead of the submodule of the same name!-->
     <ItemGroup Condition="'$(UseOnlySubmodules)' == 'false'">
-        <!--        <PackageReference Include="CodeMechanic.Bash" Version="1.0.6" />-->
+        <PackageReference Include="CodeMechanic.Razorhat" Version="1.0.3"/>
     </ItemGroup>
 
     <!--  SUBMODULES-ONLY (less mature code)  Any submodule in this item group will be used instead of the Nuget Package of the same name!-->
     <ItemGroup Condition="'$(UseOnlySubmodules)' == 'true'">
-        <!--        <ProjectReference Include="..\CodeMechanic.Bash\CodeMechanic.Bash.csproj" />-->
         <ProjectReference Include="..\CodeMechanic.Razorhat\CodeMechanic.Razorhat.csproj"/>
 
     </ItemGroup>
