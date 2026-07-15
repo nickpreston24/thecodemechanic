@@ -13,10 +13,10 @@ const pb = new PocketBase(pb_url);
 pb.autoCancellation(false);
 
 export default function createEditableStore({
-    collection,
-    field = "markdown",
-    renderer = (x) => x
-}) {
+                                                collection,
+                                                field = "markdown",
+                                                renderer = (x) => x
+                                            }) {
     // IMPORTANT: Do NOT put the `pb` instance on the returned object.
     // Alpine.store() deeply proxies everything. PocketBase has internal
     // circular references / large graphs → Maximum call stack size exceeded.
@@ -30,6 +30,8 @@ export default function createEditableStore({
         modalOpen: false,
         editingKey: "",
         draft: "",
+        editingType: "content",   // "content" | "images" | "videos"
+        sourceStore: null,        // will hold the real store that owns the data
 
         get isAuthenticated() {
             return pb.authStore.isValid;
@@ -44,6 +46,8 @@ export default function createEditableStore({
         },
 
         async init() {
+            if (this._loaded && !force) return;          // ← Prevent duplicate loads.
+            this._loaded = true;
             try {
                 const records = await pb.collection(collection).getFullList();
 
@@ -88,6 +92,13 @@ export default function createEditableStore({
                     .catch(() => null);
 
                 if (existing) {
+                    let prev = existing[field];
+                    console.log(`prev: ${prev}`, prev)
+                    if (prev === null ||
+                        prev === undefined
+                    )
+                        return;
+
                     this.items[key] = existing[field];
                     console.log(`[${collection}] Seeded from existing DB record: ${key}`);
                     return;
@@ -110,43 +121,105 @@ export default function createEditableStore({
         async save() {
             if (!this.isAdmin || !this.editingKey) return;
 
+            const target = this.sourceStore || this;
             const key = this.editingKey;
             const value = typeof this.draft === "string" ? this.draft.trim() : this.draft;
 
             try {
+                // re-use the existing save logic but against the target store
                 const existing = await pb
-                    .collection(collection)
+                    .collection(target.collection)
                     .getFirstListItem(`key="${key}"`)
                     .catch(() => null);
 
+                console.log(`updating ${target.name} - at field ${target.field}`)
+
                 if (existing) {
-                    await pb.collection(collection).update(existing.id, {
-                        [field]: value,
+                    await pb.collection(target.collection).update(existing.id, {
+                        [target.field]: value,
                     });
                 } else {
-                    await pb.collection(collection).create({
+                    await pb.collection(target.collection).create({
                         key,
-                        [field]: value,
+                        [target.field]: value,
                     });
                 }
 
-                this.items[key] = value;
+                target.items[key] = value;          // update the real store
                 this.modalOpen = false;
-                console.log(`[${collection}] Saved: ${key}`);
+                console.log(`[${target.collection}] Saved: ${key}`);
+                console.log("with value :>>", value);
+
             } catch (err) {
-                console.error(`[${collection}] Save failed for "${key}"`, err);
-                alert("Save failed — check console / PocketBase rules");
+                console.error(`Save failed for "${key}"`, err);
+                alert("Save failed");
             }
         },
 
-        startEditing({ key }) {
+        startEditing({key, type = "content", sourceStore = null}) {
             if (!this.isAdmin) {
                 alert("Admin access required");
                 return;
             }
             this.editingKey = key;
-            this.draft = this.get(key) ?? "";
+            this.editingType = type;
+            this.sourceStore = sourceStore || this;          // who actually owns the data
+            this.draft = (sourceStore || this).get(key) ?? "";
             this.modalOpen = true;
+        },
+
+        /**
+         * Upload a file directly to PocketBase (images / videos).
+         * Uses the `file` field, then writes the resulting public URL into `draft`
+         * (and into the `url` field) so the preview and save stay in sync.
+         */
+        async uploadFile(file) {
+            if (!this.isAdmin || !this.editingKey || !file) return;
+
+            const target = this.sourceStore || this;
+            const key = this.editingKey;
+
+            try {
+                // 1. Find or create the record
+                let record = await pb
+                    .collection(target.collection)
+                    .getFirstListItem(`key="${key}"`)
+                    .catch(() => null);
+
+                if (!record) {
+                    record = await pb.collection(target.collection).create({
+                        key,
+                        // leave url empty for now; we'll fill it after the file lands
+                    });
+                }
+
+                // 2. Upload the file into the `file` field
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const updated = await pb
+                    .collection(target.collection)
+                    .update(record.id, formData);
+
+                // 3. Build the public URL PocketBase serves
+                //    (works for both images and videos)
+                const filename = updated.file;               // PB stores the filename here
+                const publicUrl = pb.files.getUrl(updated, filename);
+
+                // 4. Keep everything in sync
+                this.draft = publicUrl;                      // live preview + textarea
+                target.items[key] = publicUrl;               // reactive store
+
+                // 5. Also persist the url field so future loads are correct
+                await pb.collection(target.collection).update(updated.id, {
+                    url: publicUrl,
+                });
+
+                console.log(`[${target.collection}] Uploaded file for ${key} → ${publicUrl}`);
+            } catch (err) {
+                console.error("Upload failed", err);
+                alert("Upload failed — check console / PB file rules");
+            }
         },
 
         // Your modal calls .cancel() — keep both names
@@ -171,11 +244,11 @@ export default function createEditableStore({
             try {
                 await pb.collection("users").authWithPassword(email, password);
                 console.log("Login successful:", this.currentUser?.email);
-                await this.init();
-                return { success: true };
+                await this.init({force: true});
+                return {success: true};
             } catch (err) {
                 console.error("Login failed", err);
-                return { success: false, error: err.message || "Login failed" };
+                return {success: false, error: err.message || "Login failed"};
             }
         },
 

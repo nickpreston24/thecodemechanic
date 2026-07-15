@@ -27,7 +27,9 @@
                                 <div class="px-5 pt-5">
                                     <div class="flex items-start justify-between pb-2">
                                         <div>
-                                            <h2 class="text-base font-semibold" style="color: #e2e8f0;">Edit Content
+                                            <h2 class="text-base font-semibold" style="color: #e2e8f0;">                                                
+                                                <span x-text="$store.content.editingType === 'content' ? 'Edit Content' : $store.content.editingType === 'images' ? 'Edit Image' : 'Edit Video'">
+                                                </span>
                                             </h2>
                                             <p class="font-mono text-xs" style="color: #64748b;"
                                                x-text="$store.content.editingKey"></p>
@@ -43,24 +45,70 @@
                                 <!-- Body -->
                                 <div class="flex-1 space-y-5 px-5 pt-4 pb-6">
 
-                                    <!-- Markdown -->
+
+                                    <!-- Editor input (Markdown for content, URL for images/videos) -->
                                     <div>
-                                        <label class="mb-1 block text-sm font-medium"
-                                               style="color: #94a3b8;">Markdown</label>
-                                        <textarea x-model="$store.content.draft" rows="10"
-                                                  class="w-full rounded-md border p-3 font-mono text-sm focus:outline-none"
-                                                  style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
-                                                  placeholder="Enter markdown..."></textarea>
+                                        <label class="mb-1 block text-sm font-medium" style="color: #94a3b8;"
+                                               x-text="$store.content.editingType === 'content' ? 'Markdown' : 
+                       $store.content.editingType === 'images' ? 'Image URL' : 'Video URL'">
+                                        </label>
+
+                                        <template x-if="$store.content.editingType === 'content'">
+                                                    <textarea x-model="$store.content.draft" rows="10"
+                                                              class="w-full rounded-md border p-3 font-mono text-sm focus:outline-none"
+                                                              style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
+                                                              placeholder="Enter markdown..."></textarea>
+                                        </template>
+
+                                        <template x-if="$store.content.editingType !== 'content'">
+                                            <textarea x-model="$store.content.draft" rows="3"
+                                                      class="w-full rounded-md border p-3 font-mono text-sm focus:outline-none"
+                                                      style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
+                                                      :placeholder="$store.content.editingType === 'images' ? 'https://example.com/image.jpg' : 'https://example.com/video.mp4'"></textarea>
+                                        </template>
+
+                                        <!-- File upload (only for images & videos) -->
+                                        <template
+                                                x-if="$store.content.editingType === 'images' || $store.content.editingType === 'videos'">
+                                            <div class="mt-3">
+                                                <label class="mb-1 block text-sm font-medium" style="color: #94a3b8;">
+                                                    Or upload a file
+                                                </label>
+                                                <input type="file"
+                                                       accept="image/*,video/*"
+                                                       class="block w-full text-sm"
+                                                       style="color: #94a3b8;"
+                                                       @change="
+                   const file = $event.target.files[0];
+                   if (file) $store.content.uploadFile(file);
+                   $event.target.value = '';   // allow re-selecting same file
+               ">
+                                            </div>
+                                        </template>
                                     </div>
 
                                     <!-- Preview -->
                                     <div>
                                         <label class="mb-1 block text-sm font-medium"
                                                style="color: #94a3b8;">Preview</label>
-                                        <div class="prose prose-sm max-w-none min-h-[120px] rounded-md border p-4"
-                                             style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
-                                             x-html="$store.content.renderMarkdown($store.content.draft)">
-                                        </div>
+
+                                        <!-- Preview section – show live image/video when not content -->
+                                        <template x-if="$store.content.editingType === 'content'">
+                                            <div class="prose prose-sm max-w-none min-h-[120px] rounded-md border p-4"
+                                                 style="background-color: #0a0a0a; border-color: rgba(226, 232, 240, 0.15); color: #e2e8f0;"
+                                                 x-html="$store.content.renderMarkdown($store.content.draft)">
+                                            </div>
+                                        </template>
+
+                                        <template x-if="$store.content.editingType === 'images'">
+                                            <img :src="$store.content.draft" class="max-w-full rounded" alt="preview">
+                                        </template>
+
+                                        <template x-if="$store.content.editingType === 'videos'">
+                                            <video :src="$store.content.draft" controls
+                                                   class="max-w-full rounded"></video>
+                                        </template>
+
                                     </div>
 
                                 </div>

@@ -63,7 +63,7 @@ document.addEventListener("alpine:init", () => {
         };
 
         const applyValue = (value) => {
-            if (value === null || value === undefined) return;
+            if ((tag === "img" || tag === "video") && String(value).trim() === "") return;
 
             if (tag === "img") {
                 if (el.getAttribute("src") !== String(value)) {
@@ -97,7 +97,7 @@ document.addEventListener("alpine:init", () => {
             const rendered = s.renderMarkdown
                 ? s.renderMarkdown(value)
                 : (s.render ? s.render(value) : value);
-            
+
             if (el.innerHTML.trim() === String(rendered).trim()) return;
 
             // The critical line: we write, but we have already set el._x_edit_bound
@@ -175,10 +175,15 @@ document.addEventListener("alpine:init", () => {
         button.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopImmediatePropagation();
-            getStore()?.startEditing({
+
+            const realStore = getStore();
+            const type = storeName;                 // "content" | "images" | "videos"
+
+            // Always open the content modal (the only one that exists)
+            Alpine.store("content").startEditing({
                 key,
-                element: tag,
-                field: tag === "img" || tag === "video" ? "src" : "markdown",
+                type,
+                sourceStore: realStore,
             });
         });
 
