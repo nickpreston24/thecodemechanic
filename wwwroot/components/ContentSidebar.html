@@ -28,8 +28,11 @@
                                     <div class="flex items-start justify-between pb-2">
                                         <div>
                                             <h2 class="text-base font-semibold" style="color: #e2e8f0;">                                                
-                                                <span x-text="$store.content.editingType === 'content' ? 'Edit Content' : $store.content.editingType === 'images' ? 'Edit Image' : 'Edit Video'">
-                                                </span>
+                                                <span x-text="
+                                                $store.content.editingType === 'images' ? 'Edit Image' :
+                                                $store.content.editingType === 'videos' ? 'Edit Video' :
+                                                'Edit Content'
+                                            "></span>
                                             </h2>
                                             <p class="font-mono text-xs" style="color: #64748b;"
                                                x-text="$store.content.editingKey"></p>
@@ -49,8 +52,11 @@
                                     <!-- Editor input (Markdown for content, URL for images/videos) -->
                                     <div>
                                         <label class="mb-1 block text-sm font-medium" style="color: #94a3b8;"
-                                               x-text="$store.content.editingType === 'content' ? 'Markdown' : 
-                       $store.content.editingType === 'images' ? 'Image URL' : 'Video URL'">
+                                               x-text="
+                                            $store.content.editingType === 'images' ? 'Image URL' :
+                                            $store.content.editingType === 'videos' ? 'Video URL' :
+                                            'Markdown'
+                                        ">
                                         </label>
 
                                         <template x-if="$store.content.editingType === 'content'">

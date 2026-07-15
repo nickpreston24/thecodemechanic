@@ -52,12 +52,11 @@
 
 <script type="module" src="~/js/site.js" asp-append-version="true"></script>
 
-
-
 <script type="module">
-
     console.log("[DEBUG] loading content sidebar!")
-    const modalHtml = await fetch("/components/ContentSidebar.html")
+
+    // cache-bust so prod never serves a stale ContentSidebar.html
+    const modalHtml = await fetch(`/components/ContentSidebar.html?v=${Date.now()}`)
         .then(r => r.text());
 
     const modalPlaceholder = document.getElementById("modal-placeholder");

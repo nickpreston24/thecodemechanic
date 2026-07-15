@@ -157,12 +157,16 @@ export default function createEditableStore({
         },
 
         startEditing({key, type = "content", sourceStore = null}) {
+
             if (!this.isAdmin) {
                 alert("Admin access required");
                 return;
             }
+
+            console.log("[startEditing]", {key, type, hasSourceStore: !!sourceStore});
+            
             this.editingKey = key;
-            this.editingType = type;
+            this.editingType = type || "content";   // force a safe default
             this.sourceStore = sourceStore || this;          // who actually owns the data
             this.draft = (sourceStore || this).get(key) ?? "";
             this.modalOpen = true;
@@ -205,7 +209,7 @@ export default function createEditableStore({
                 //    (works for both images and videos)
                 const filename = updated.file;               // PB stores the filename here
                 const publicUrl = pb.files.getUrl(updated, filename);
-                
+
                 // 4. Keep everything in sync
                 this.draft = publicUrl;                      // live preview + textarea
                 target.items[key] = publicUrl;               // reactive store
@@ -224,9 +228,6 @@ export default function createEditableStore({
 
         // Your modal calls .cancel() — keep both names
         cancel() {
-            this.modalOpen = false;
-        },
-        cancelEdit() {
             this.modalOpen = false;
         },
 
