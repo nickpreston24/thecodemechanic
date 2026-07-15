@@ -40,9 +40,9 @@ public class DripSidebarTagHelper : TagHelper
                                                                              <div>
                                                                                  <h2 class="text-base font-semibold" style="color: #e2e8f0;">                                                
                                                                                      <span x-text="
-                                                                                     $store.content.editingType === 'images' ? 'Edit Image' :
-                                                                                     $store.content.editingType === 'videos' ? 'Edit Video' :
-                                                                                     'Edit Content'
+                                                                                     $store.content.editingType === 'images' ? 'Edit Image (Tag helper ed.)' :
+                                                                                     $store.content.editingType === 'videos' ? 'Edit Video (Tag helper ed.)' :
+                                                                                     'Edit Content (Tag helper ed.)'
                                                                                  "></span>
                                                                                  </h2>
                                                                                  <p class="font-mono text-xs" style="color: #64748b;"
