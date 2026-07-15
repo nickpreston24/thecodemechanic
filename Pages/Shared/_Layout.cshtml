@@ -50,22 +50,51 @@
 
 @await RenderSectionAsync("Scripts", required: false)
 
-<script type="module" src="~/js/site.js" asp-append-version="true"></script>
 
-<script type="module">
-    console.log("[DEBUG] loading content sidebar!")
+@{
+    bool force_alpine_to_see_sidebar = true;
+}
+@if (@force_alpine_to_see_sidebar)
+{
+    Console.WriteLine("FORCING ALPINE TO SEE SIDEBAR");
 
-    // cache-bust so prod never serves a stale ContentSidebar.html
-    const modalHtml = await fetch(`/components/ContentSidebar.html?v=${Date.now()}`)
-        .then(r => r.text());
+    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
 
-    const modalPlaceholder = document.getElementById("modal-placeholder");
-    modalPlaceholder.innerHTML = modalHtml;
+    <drip-sidebar></drip-sidebar>
 
-    if (window.Alpine) {
-        window.Alpine.initTree(modalPlaceholder);
-    }
-</script>
+    <script type="module">
+        // give Alpine a moment, then make sure the teleported content is live
+        await new Promise(r => setTimeout(r, 0));
+        if (window.Alpine) {
+            // the teleport template is now in the DOM; re-scan just in case
+            Alpine.initTree(document.body);
+        }
+    </script>
+}
+
+@if (!@force_alpine_to_see_sidebar)
+{
+    Console.WriteLine("LOADING SIDEBAR BEFORE SITEJS");
+    <drip-sidebar></drip-sidebar>
+
+    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
+}
+
+@* *@
+@* <script type="module"> *@
+@*     console.log("[DEBUG] loading content sidebar (cache-busted)!") *@
+@* *@
+@*     // cache-bust so prod never serves a stale ContentSidebar.html *@
+@*     const modalHtml = await fetch(`/components/ContentSidebar.html?v=${Date.now()}`) *@
+@*         .then(r => r.text()); *@
+@* *@
+@*     const modalPlaceholder = document.getElementById("modal-placeholder"); *@
+@*     modalPlaceholder.innerHTML = modalHtml; *@
+@* *@
+@*     if (window.Alpine) { *@
+@*         window.Alpine.initTree(modalPlaceholder); *@
+@*     } *@
+@* </script> *@
 
 </body>
 </html>
