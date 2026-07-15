@@ -205,7 +205,7 @@ export default function createEditableStore({
                 //    (works for both images and videos)
                 const filename = updated.file;               // PB stores the filename here
                 const publicUrl = pb.files.getUrl(updated, filename);
-
+                
                 // 4. Keep everything in sync
                 this.draft = publicUrl;                      // live preview + textarea
                 target.items[key] = publicUrl;               // reactive store
