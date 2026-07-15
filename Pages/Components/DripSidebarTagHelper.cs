@@ -7,9 +7,13 @@ public class DripSidebarTagHelper : TagHelper
 {
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-        output.TagName = "div"; // keep a real element
+        output.TagName = "div";
         output.Attributes.SetAttribute("class", "relative z-50");
+        output.Attributes.SetAttribute("x-data", ""); // ← this is the key
+// or even better for clarity:
+// output.Attributes.SetAttribute("x-data", "{}");
         output.TagMode = TagMode.StartTagAndEndTag;
+
         output.Content.SetHtmlContent("""
                                       <template x-teleport="body">
                                              <div x-show="$store?.content?.modalOpen" @keydown.window.escape="$store.content.cancel()"
