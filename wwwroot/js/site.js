@@ -1,58 +1,35 @@
-﻿// import Alpine from "alpinejs";
+// site.js — order is extremely important
 import Alpine from "/vendor/alpinejs/module.esm.min.js";
 import createContentStore from "./stores/content-store.js";
+import createImageStore from "./stores/image-store.js";
+import createVideoStore from "./stores/video-store.js";
 
+// 1. Expose Alpine globally immediately
 window.Alpine = Alpine;
 
+// 2. Register stores BEFORE any await and BEFORE Alpine.start()
+//    The edit sidebar already contains $store.content.* expressions.
+//    If these are not present when Alpine starts walking the DOM → "Cannot read properties of undefined"
+Alpine.store("content", createContentStore());
+Alpine.store("images", createImageStore());
+Alpine.store("videos", createVideoStore());
+
+// 3. Register the custom directive (listens for alpine:init)
 await import("./plugins/inline-editor.js");
 
-Alpine.store("content", createContentStore());
+// 4. Load data (404s are expected until you create the collections)
+await Promise.allSettled([
+    Alpine.store("content").init(),
+    Alpine.store("images").init(),
+    Alpine.store("videos").init(),
+]);
 
-await Alpine.store("content").init();
-
+// 5. Start Alpine last
 Alpine.start();
 
-// import createContentStore from "./stores/content-store.js";
-//
-// // Global plugins / directives
-// import "./plugins/inline-editor.js"; // ← Make sure this has the hover version
-// // const content_store = Alpine.store("content", createContentStore());
-//
-// console.log("%c[DEBUG] window.Alpine? ::>> " + !!window.Alpine, "color: #eab308");
-//
-//
-// window.Alpine = Alpine;
-// console.log("inline editor loaded", window.Alpine);
-//
-// Alpine.store("content", createContentStore());
-//
-// await Alpine.store("content").init();
-//
-// Alpine.start();
-//
-//
-// // Alpine.start();
-// //
-// // // after Alpine has started
-// // await Alpine.store("content").init();
-// // Alpine.initTree(document.body);
-//
-// //
-console.log("After start:");
-console.log("window.Alpine === Alpine", window.Alpine === Alpine);
-console.log("body marker", document.body._x_marker);
-console.log("h2 marker", document.querySelector("h2[x-text]")?._x_marker);
-// console.log("stores", content_store);
-
-console.log(Alpine.version);
-
 console.log(
-    "%c[CodeMechanic] ✅ Alpine + ContentStore registered",
-    "color:#22c55e",
+    "%c[CodeMechanic] ✅ Alpine + Content/Images/Videos stores registered",
+    "color:#22c55e"
 );
-
-
-console.log("site.js loaded! <3")
-
-//
-//
+console.log("Alpine version:", Alpine.version);
+console.log("site.js loaded! <3");

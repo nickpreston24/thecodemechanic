@@ -19,3 +19,7 @@
 
 
 
+### Chats
+
+1. Fixing the `x-edit` and upgrading it to handle images and videos: https://chatgpt.com/c/6a544548-0678-83ea-8bc5-be1f24775810
+2. ...

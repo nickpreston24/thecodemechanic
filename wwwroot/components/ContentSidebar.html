@@ -1,19 +1,19 @@
 <div class="relative z-50">
 
     <template x-teleport="body">
-        <div x-show="$store.content.modalOpen" @keydown.window.escape="$store.content.cancelEdit()"
+        <div x-show="$store?.content?.modalOpen" @keydown.window.escape="$store.content.cancel()"
              class="relative z-[99]">
 
             <!-- Backdrop -->
-            <div x-show="$store.content.modalOpen" x-transition.opacity.duration.300ms
-                 @click="$store.content.cancelEdit()" class="fixed inset-0 bg-black/60">
+            <div x-show="$store?.content?.modalOpen" x-transition.opacity.duration.300ms
+                 @click="$store.content.cancel()" class="fixed inset-0 bg-black/60">
             </div>
 
             <!-- Slide-over -->
             <div class="overflow-hidden fixed inset-0">
                 <div class="overflow-hidden absolute inset-0">
                     <div class="flex fixed inset-y-0 right-0 pt-11 pl-10 max-w-full">
-                        <div x-show="$store.content.modalOpen"
+                        <div x-show="$store?.content?.modalOpen"
                              x-transition:enter="transform transition ease-in-out duration-500 sm:duration-700"
                              x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
                              x-transition:leave="transform transition ease-in-out duration-500 sm:duration-700"
@@ -32,7 +32,7 @@
                                             <p class="font-mono text-xs" style="color: #64748b;"
                                                x-text="$store.content.editingKey"></p>
                                         </div>
-                                        <button @click="$store.content.cancelEdit()"
+                                        <button @click="$store.content.cancel()"
                                                 class="flex items-center gap-1 rounded-md border px-3 py-1.5 text-xs font-medium transition-colors"
                                                 style="border-color: rgba(226, 232, 240, 0.2); color: #94a3b8;">
                                             Close
@@ -68,12 +68,12 @@
                                 <!-- Footer -->
                                 <div class="flex justify-end gap-3 border-t px-5 py-4"
                                      style="border-color: rgba(226, 232, 240, 0.1);">
-                                    <button @click="$store.content.cancelEdit()"
+                                    <button @click="$store.content.cancel()"
                                             class="rounded-md border px-4 py-2 text-sm transition-colors"
                                             style="border-color: rgba(226, 232, 240, 0.2); color: #94a3b8;">
                                         Cancel
                                     </button>
-                                    <button @click="$store.content.saveEdit()"
+                                    <button @click="$store.content.save()"
                                             class="rounded-md px-4 py-2 text-sm font-medium transition-colors"
                                             style="background-color: #11aaff; color: white;">
                                         Save Changes
