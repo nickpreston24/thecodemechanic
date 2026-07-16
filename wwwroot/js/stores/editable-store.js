@@ -118,59 +118,116 @@ export default function createEditableStore({
             }
         },
 
+
         async save() {
             if (!this.isAdmin || !this.editingKey) return;
 
-            const target = this.sourceStore || this;
+            const target = this.sourceStore || this;          // the real store that owns the data
             const key = this.editingKey;
             const value = typeof this.draft === "string" ? this.draft.trim() : this.draft;
+            const coll = target.collection;
+            const fld = target.field;
+
+            console.log(`[save] target.collection=${coll}, field=${fld}, key=${key}`);
 
             try {
-                // re-use the existing save logic but against the target store
                 const existing = await pb
-                    .collection(target.collection)
+                    .collection(coll)
                     .getFirstListItem(`key="${key}"`)
                     .catch(() => null);
 
-                console.log(`updating ${target.name} - at field ${target.field}`)
-
                 if (existing) {
-                    await pb.collection(target.collection).update(existing.id, {
-                        [target.field]: value,
+                    console.log(`[save] updating id=${existing.id}`);
+                    await pb.collection(coll).update(existing.id, {
+                        [fld]: value,
                     });
                 } else {
-                    await pb.collection(target.collection).create({
+                    console.log(`[save] creating new record`);
+                    await pb.collection(coll).create({
                         key,
-                        [target.field]: value,
+                        [fld]: value,
                     });
                 }
 
-                target.items[key] = value;          // update the real store
+                // keep the real store in sync
+                target.items[key] = value;
                 this.modalOpen = false;
-                console.log(`[${target.collection}] Saved: ${key}`);
-                console.log("with value :>>", value);
 
+                console.log(`[${coll}] Saved: ${key}`);
             } catch (err) {
                 console.error(`Save failed for "${key}"`, err);
-                alert("Save failed");
+                alert("Save failed — check console");
             }
         },
 
-        startEditing({key, type = "content", sourceStore = null}) {
+        // async save() {
+        //     if (!this.isAdmin || !this.editingKey) return;
+        //
+        //     const target = this.sourceStore || this;
+        //     const key = this.editingKey;
+        //     const value = typeof this.draft === "string" ? this.draft.trim() : this.draft;
+        //
+        //     try {
+        //         // re-use the existing save logic but against the target store
+        //         const existing = await pb
+        //             .collection(target.collection)
+        //             .getFirstListItem(`key="${key}"`)
+        //             .catch(() => null);
+        //
+        //         console.log(`updating ${target.name} - at field ${target.field}`)
+        //
+        //         if (existing) {
+        //             await pb.collection(target.collection).update(existing.id, {
+        //                 [target.field]: value,
+        //             });
+        //         } else {
+        //             await pb.collection(target.collection).create({
+        //                 key,
+        //                 [target.field]: value,
+        //             });
+        //         }
+        //
+        //         target.items[key] = value;          // update the real store
+        //         this.modalOpen = false;
+        //         console.log(`[${target.collection}] Saved: ${key}`);
+        //         console.log("with value :>>", value);
+        //
+        //     } catch (err) {
+        //         console.error(`Save failed for "${key}"`, err);
+        //         alert("Save failed");
+        //     }
+        // },
 
+
+        startEditing({key, type = "content", sourceStore = null}) {
             if (!this.isAdmin) {
                 alert("Admin access required");
                 return;
             }
-
-            console.log("[startEditing]", {key, type, hasSourceStore: !!sourceStore});
-            
             this.editingKey = key;
-            this.editingType = type || "content";   // force a safe default
-            this.sourceStore = sourceStore || this;          // who actually owns the data
+            this.editingType = type;
+            this.sourceStore = sourceStore || this;
             this.draft = (sourceStore || this).get(key) ?? "";
             this.modalOpen = true;
+
+            console.log("[startEditing]", {key, type, hasSourceStore: !!sourceStore});
         },
+        
+        // startEditing({key, type = "content", sourceStore = null}) {
+        //
+        //     if (!this.isAdmin) {
+        //         alert("Admin access required");
+        //         return;
+        //     }
+        //
+        //     console.log("[startEditing]", {key, type, hasSourceStore: !!sourceStore});
+        //
+        //     this.editingKey = key;
+        //     this.editingType = type || "content";   // force a safe default
+        //     this.sourceStore = sourceStore || this;          // who actually owns the data
+        //     this.draft = (sourceStore || this).get(key) ?? "";
+        //     this.modalOpen = true;
+        // },
 
         /**
          * Upload a file directly to PocketBase (images / videos).

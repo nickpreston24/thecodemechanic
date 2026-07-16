@@ -9,9 +9,9 @@ public class DripSidebarTagHelper : TagHelper
     {
         output.TagName = "div";
         output.Attributes.SetAttribute("class", "relative z-50");
-        output.Attributes.SetAttribute("x-data", ""); // ← this is the key
-// or even better for clarity:
-// output.Attributes.SetAttribute("x-data", "{}");
+        // output.Attributes.SetAttribute("x-data", ""); // ← this is the key
+        // or even better for clarity:
+        output.Attributes.SetAttribute("x-data", "{}");
         output.TagMode = TagMode.StartTagAndEndTag;
 
         output.Content.SetHtmlContent("""

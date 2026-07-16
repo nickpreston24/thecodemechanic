@@ -180,11 +180,18 @@ document.addEventListener("alpine:init", () => {
             const type = storeName;                 // "content" | "images" | "videos"
 
             // Always open the content modal (the only one that exists)
+
             Alpine.store("content").startEditing({
                 key,
-                type,
-                sourceStore: realStore,
+                type: storeName,          // "content" | "images" | "videos"
+                sourceStore: getStore(),  // the real store
             });
+            
+            // Alpine.store("content").startEditing({
+            //     key,
+            //     type,
+            //     sourceStore: realStore,
+            // });
         });
 
         if (el.nextSibling) {

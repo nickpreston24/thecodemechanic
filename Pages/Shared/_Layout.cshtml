@@ -50,35 +50,35 @@
 
 @await RenderSectionAsync("Scripts", required: false)
 
+@* *@
+@* @{ *@
+@*     bool force_alpine_to_see_sidebar = false; *@
+@* } *@
+@* @if (@force_alpine_to_see_sidebar) *@
+@* { *@
+@*     Console.WriteLine("FORCING ALPINE TO SEE SIDEBAR"); *@
+@* *@
+@*     <script type="module" src="~/js/site.js" asp-append-version="true"></script> *@
+@* *@
+@*     <drip-sidebar></drip-sidebar> *@
+@* *@
+@*     <script type="module"> *@
+@*         // give Alpine a moment, then make sure the teleported content is live *@
+@*         await new Promise(r => setTimeout(r, 0)); *@
+@*         if (window.Alpine) { *@
+@*             // the teleport template is now in the DOM; re-scan just in case *@
+@*             Alpine.initTree(document.body); *@
+@*         } *@
+@*     </script> *@
+@* } *@
+@* *@
+@* @if (!@force_alpine_to_see_sidebar) *@
+@* { *@
+@*     Console.WriteLine("LOADING SIDEBAR BEFORE SITEJS"); *@
+<drip-sidebar></drip-sidebar>
 
-@{
-    bool force_alpine_to_see_sidebar = false;
-}
-@if (@force_alpine_to_see_sidebar)
-{
-    Console.WriteLine("FORCING ALPINE TO SEE SIDEBAR");
-
-    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
-
-    <drip-sidebar></drip-sidebar>
-
-    <script type="module">
-        // give Alpine a moment, then make sure the teleported content is live
-        await new Promise(r => setTimeout(r, 0));
-        if (window.Alpine) {
-            // the teleport template is now in the DOM; re-scan just in case
-            Alpine.initTree(document.body);
-        }
-    </script>
-}
-
-@if (!@force_alpine_to_see_sidebar)
-{
-    Console.WriteLine("LOADING SIDEBAR BEFORE SITEJS");
-    <drip-sidebar></drip-sidebar>
-
-    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
-}
+<script type="module" src="~/js/site.js" asp-append-version="true"></script>
+@* } *@
 
 @* *@
 @* <script type="module"> *@
