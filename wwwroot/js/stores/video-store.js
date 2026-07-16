@@ -1,4 +1,4 @@
-import createEditableStore from "./editable-store.js";
+import createEditableStore from "./editable-store.js?v=3";
 
 export default () =>
     createEditableStore({

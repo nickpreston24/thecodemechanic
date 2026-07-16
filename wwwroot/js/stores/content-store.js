@@ -1,5 +1,5 @@
 // import { marked } from "marked";
-import createEditableStore from "./editable-store.js";
+import createEditableStore from "./editable-store.js?v=3";
 
 // Simple, XSS-safe markdown renderer (same spirit as the working legacy store).
 // Replace with marked.parse later if you want full Markdown + GFM.
