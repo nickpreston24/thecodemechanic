@@ -1,8 +1,8 @@
 // site.js — order is extremely important
 import Alpine from "/vendor/alpinejs/module.esm.min.js";
-import createContentStore from "./stores/content-store.js";
-import createImageStore from "./stores/image-store.js";
-import createVideoStore from "./stores/video-store.js";
+import createContentStore from "./stores/content-store.js?v=3";
+import createImageStore from "./stores/image-store.js?v=3";
+import createVideoStore from "./stores/video-store.js?v=3";
 
 // 1. Expose Alpine globally immediately
 window.Alpine = Alpine;
