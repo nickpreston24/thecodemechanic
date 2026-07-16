@@ -46,12 +46,10 @@ export default function createEditableStore({
         },
 
         async init() {
-            if (this._loaded && !force) return;          // ← Prevent duplicate loads.
-            this._loaded = true;
             try {
                 const records = await pb.collection(collection).getFullList();
 
-                // Clear first to preserve reactivity if re-init after login
+                // Clear first to preserve reactivity
                 Object.keys(this.items).forEach((k) => delete this.items[k]);
 
                 for (const r of records) {
@@ -68,6 +66,30 @@ export default function createEditableStore({
                 );
             }
         },
+
+        // async init() {
+        //     if (this._loaded && !force) return;          // ← Prevent duplicate loads.
+        //     this._loaded = true;
+        //     try {
+        //         const records = await pb.collection(collection).getFullList();
+        //
+        //         // Clear first to preserve reactivity if re-init after login
+        //         Object.keys(this.items).forEach((k) => delete this.items[k]);
+        //
+        //         for (const r of records) {
+        //             this.items[r.key] = r[field];
+        //         }
+        //         console.log(
+        //             `%c[${collection}] Loaded ${Object.keys(this.items).length} items`,
+        //             "color:#22c55e"
+        //         );
+        //     } catch (err) {
+        //         console.warn(
+        //             `[${collection}] init failed (using HTML fallback until seeded/saved):`,
+        //             err?.message || err
+        //         );
+        //     }
+        // },
 
         /**
          * Returns the value if the key exists in the store, otherwise null.
@@ -212,7 +234,7 @@ export default function createEditableStore({
 
             console.log("[startEditing]", {key, type, hasSourceStore: !!sourceStore});
         },
-        
+
         // startEditing({key, type = "content", sourceStore = null}) {
         //
         //     if (!this.isAdmin) {
@@ -302,7 +324,8 @@ export default function createEditableStore({
             try {
                 await pb.collection("users").authWithPassword(email, password);
                 console.log("Login successful:", this.currentUser?.email);
-                await this.init({force: true});
+                // await this.init({force: true});
+                await this.init();
                 return {success: true};
             } catch (err) {
                 console.error("Login failed", err);
