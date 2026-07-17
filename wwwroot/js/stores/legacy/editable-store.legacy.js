@@ -42,17 +42,7 @@ export default function createEditableStore({
         },
 
         get isAdmin() {
-            if (!this.isAuthenticated || !this.currentUser) return false;
-
-            const roles = this.currentUser.roles;
-
-            // roles will be an array when multi-select is enabled
-            if (Array.isArray(roles)) {
-                return roles.includes("admin");
-            }
-
-            // fallback just in case it comes back as a string
-            return roles === "admin";
+            return this.isAuthenticated && this.currentUser?.role === "admin";
         },
 
         async init() {
@@ -113,8 +103,6 @@ export default function createEditableStore({
          * Seed a missing key (admin only).
          * Checks PB first; creates the record if missing (same spirit as legacy).
          */
-
-
         async seed(key, value) {
             if (!key || value == null || value === "") return;
             if (key in this.items) return;
@@ -126,85 +114,31 @@ export default function createEditableStore({
                     .catch(() => null);
 
                 if (existing) {
+                    let prev = existing[field];
+                    console.log(`prev: ${prev}`, prev)
+                    if (prev === null ||
+                        prev === undefined
+                    )
+                        return;
+
                     this.items[key] = existing[field];
                     console.log(`[${collection}] Seeded from existing DB record: ${key}`);
                     return;
                 }
 
-                console.log(`[DEBUG] Attempting to create key="${key}" in collection="${collection}" with field="${field}"`);
-
-                const createData = {
+                const created = await pb.collection(collection).create({
                     key,
                     [field]: typeof value === "string" ? value.trim() : value,
-                };
-
-                if (collection === "editable_content") {
-                    createData.content_type = "markdown";
-                }
-
-                console.log("[DEBUG] createData being sent:", createData);
-
-                const created = await pb.collection(collection).create(createData);
+                });
 
                 this.items[key] = created[field];
                 console.log(`[${collection}] Seeded NEW key into PB: ${key}`);
-
             } catch (err) {
-                console.error(`=== SEED ERROR for key "${key}" in "${collection}" ===`);
-                console.error("Error object:", err);
-
-                // Try to extract PocketBase's real error
-                if (err?.response) {
-                    console.error("PocketBase response:", err.response);
-                }
-                if (err?.data) {
-                    console.error("PocketBase data:", err.data);
-                }
-                if (err?.response?.data) {
-                    console.error("Detailed validation errors:", JSON.stringify(err.response.data, null, 2));
-                }
-
-                // Fallback
+                console.error(`[${collection}] Failed to seed key "${key}"`, err);
+                // Fallback so admin can still edit
                 this.items[key] = value;
             }
         },
-
-        // async seed(key, value) {
-        //     if (!key || value == null || value === "") return;
-        //     if (key in this.items) return;
-        //
-        //     try {
-        //         const existing = await pb
-        //             .collection(collection)
-        //             .getFirstListItem(`key="${key}"`)
-        //             .catch(() => null);
-        //
-        //         if (existing) {
-        //             let prev = existing[field];
-        //             console.log(`prev: ${prev}`, prev)
-        //             if (prev === null ||
-        //                 prev === undefined
-        //             )
-        //                 return;
-        //
-        //             this.items[key] = existing[field];
-        //             console.log(`[${collection}] Seeded from existing DB record: ${key}`);
-        //             return;
-        //         }
-        //
-        //         const created = await pb.collection(collection).create({
-        //             key,
-        //             [field]: typeof value === "string" ? value.trim() : value,
-        //         });
-        //
-        //         this.items[key] = created[field];
-        //         console.log(`[${collection}] Seeded NEW key into PB: ${key}`);
-        //     } catch (err) {
-        //         console.error(`[${collection}] Failed to seed key "${key}"`, err);
-        //         // Fallback so admin can still edit
-        //         this.items[key] = value;
-        //     }
-        // },
 
 
         async save() {

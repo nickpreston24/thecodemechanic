@@ -7,6 +7,7 @@ public class DripSidebarTagHelper : TagHelper
 {
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+        Console.WriteLine("Hello from drip sidebar");
         output.TagName = "div";
         output.Attributes.SetAttribute("class", "relative z-50");
         // output.Attributes.SetAttribute("x-data", ""); // ← this is the key

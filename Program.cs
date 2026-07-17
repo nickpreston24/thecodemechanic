@@ -76,6 +76,14 @@ internal class Program
 
         app.MapRazorPages();
         app.UseHydro(builder.Environment);
+        app.MapGet("/profile/avatar", () => Results.Content(
+            $"""
+             <div class="alert alert-info">
+                <p class="fs-1 fw-bold">🌴 Welcome to my page!</p>
+                <p class="fs-3">You arrived on ({DateTime.Now.ToLongTimeString()})</p>
+             </div>
+             """)
+        );
 
         logger.Information("Running as a web app.");
         app.Run();

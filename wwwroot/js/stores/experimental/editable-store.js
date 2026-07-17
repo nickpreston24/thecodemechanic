@@ -42,17 +42,7 @@ export default function createEditableStore({
         },
 
         get isAdmin() {
-            if (!this.isAuthenticated || !this.currentUser) return false;
-
-            const roles = this.currentUser.roles;
-
-            // roles will be an array when multi-select is enabled
-            if (Array.isArray(roles)) {
-                return roles.includes("admin");
-            }
-
-            // fallback just in case it comes back as a string
-            return roles === "admin";
+            return this.isAuthenticated && this.currentUser?.role === "admin";
         },
 
         async init() {
