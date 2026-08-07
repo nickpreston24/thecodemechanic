@@ -26,8 +26,8 @@
 
     <ItemGroup>
         <!-- Watch C# logic files -->
-        <Watch Include="**/*.cshtml.cs"/>
-        <Watch Include="**/*.cs"/>
+        <!--        <Watch Include="**/*.cshtml.cs"/>-->
+        <!--        <Watch Include="**/*.cs"/>-->
 
         <!-- Watch Static Assets -->
         <Watch Include="wwwroot/js/site.js"/>
@@ -104,9 +104,32 @@
         <ProjectReference Include="..\CodeMechanic.Razorhat\CodeMechanic.Razorhat.csproj"/>
 
     </ItemGroup>
+
     <ItemGroup>
-        <None Include="wwwroot\components\ContentSidebar.html"/>
+        <!--        <None Include="wwwroot\components\ContentSidebar.html"/>-->
     </ItemGroup>
 
+    <PropertyGroup>
+        <!-- Let analyzers + code fixes see Content items (including .cshtml) as AdditionalFiles -->
+        <!--        <AdditionalFileItemNames>$(AdditionalFileItemNames);Content</AdditionalFileItemNames>-->
+    </PropertyGroup>
+
+    <ItemGroup>
+
+        <!-- compiler analyzer -->
+        <ProjectReference Include="..\CodeMechanic.Guards\CodeMechanic.Guards.csproj"
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false"
+                          PrivateAssets="all"/>
+
+        <!-- IDE extension -->
+        <!--        <ProjectReference Include="..\CodeMechanic.Guards.CodeFixes\CodeMechanic.Guards.CodeFixes.csproj"/>-->
+
+        <ProjectReference Include="..\CodeMechanic.Guards.CodeFixes\CodeMechanic.Guards.CodeFixes.csproj"
+                          OutputItemType="Analyzer"
+                          ReferenceOutputAssembly="false"
+                          PrivateAssets="all"/>
+
+    </ItemGroup>
 
 </Project>
