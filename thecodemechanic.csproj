@@ -99,12 +99,12 @@
 
     <!--     Toggle Submodule mode vs Nuget mode.-->
     <PropertyGroup>
-        <UseOnlySubmodules Condition="'$(UseOnlySubmodules)' == ''">true</UseOnlySubmodules>
+        <UseOnlySubmodules Condition="'$(UseOnlySubmodules)' == ''">false</UseOnlySubmodules>
     </PropertyGroup>
 
     <!--  NUGET-ONLY (more mature code)  Any nuget package in this item group will be used instead of the submodule of the same name!-->
     <ItemGroup Condition="'$(UseOnlySubmodules)' == 'false'">
-        <PackageReference Include="CodeMechanic.Razorhat" Version="1.0.3"/>
+        <PackageReference Include="CodeMechanic.Razorhat" Version="1.0.6"/>
     </ItemGroup>
 
     <!--  SUBMODULES-ONLY (less mature code)  Any submodule in this item group will be used instead of the Nuget Package of the same name!-->
