@@ -1,3 +1,5 @@
+using System.Reflection;
+using CodeMechanic.Diagnostics;
 using CodeMechanic.FileSystem;
 // using CodeMechanic.Guards;
 using CodeMechanic.Razorhat;
@@ -86,6 +88,24 @@ internal class Program
              """)
         );
 
+        if (argsMap.HasCommand("web"))
+        {
+            logger.Information("Launching in browser tab...");
+
+            var entryAssembly = Assembly.GetEntryAssembly();
+
+            var assembly_attributes =
+                entryAssembly?.GetCustomAttributes<AssemblyMetadataAttribute>();
+
+            assembly_attributes.Dump(nameof(assembly_attributes));
+
+            var isRazorhatTool = assembly_attributes?.Any(x => x.Key == "RazorhatTool" && x.Value == "true");
+            logger.Information($"{nameof(isRazorhatTool)} :>> {isRazorhatTool}");
+
+            app.Lifetime.ApplicationStarted.Register(() =>
+                RazorhatBrowser.Open(app, logger));
+        }
+
         logger.Information("Running as a web app.");
         app.Run();
     }
@@ -104,25 +124,25 @@ internal class Program
 
         return serviceProvider;
     }
-
-
-    // private static async ValueTask CreateToolsDir()
-    //      {
-    //          var user_profile =
-    //              Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-    //  
-    //          string dotnet_tools_dir = Path
-    //              .Combine(user_profile, ".dotnet/tools", ".cm")
-    //              .Replace("\\", "/");
-    //  
-    //          Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
-    //  
-    //          // await $"ls {dotnet_tools_dir}".Bash();
-    //  
-    //          var fi = new SaveFile("foo")
-    //              .To(dotnet_tools_dir)
-    //              .As("test.txt", debug: false);
-    //  
-    //          // await $"ls {fi.Directory}".Bash();
-    //      }
 }
+
+
+// private static async ValueTask CreateToolsDir()
+//      {
+//          var user_profile =
+//              Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+//  
+//          string dotnet_tools_dir = Path
+//              .Combine(user_profile, ".dotnet/tools", ".cm")
+//              .Replace("\\", "/");
+//  
+//          Console.WriteLine($"tools dir :>> {dotnet_tools_dir}");
+//  
+//          // await $"ls {dotnet_tools_dir}".Bash();
+//  
+//          var fi = new SaveFile("foo")
+//              .To(dotnet_tools_dir)
+//              .As("test.txt", debug: false);
+//  
+//          // await $"ls {fi.Directory}".Bash();
+//      }

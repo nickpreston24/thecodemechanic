@@ -1,5 +1,6 @@
 ﻿@using System.Text.Json
 @using CodeMechanic.Razorhat
+@using CodeMechanic.Shargs
 @using ImportMap = CodeMechanic.Razorhat.ImportMap
 <!DOCTYPE html>
 <html data-theme="dracula" lang="en">
@@ -22,9 +23,10 @@
     </script>
 
     @inject ImportMap ImportMap
+    @inject ArgsMap arguments
 
-    @Html.Raw(ImportMap.RenderAsScripts(debug: true))
-
+    @Html.Raw(ImportMap.RenderAsScripts(debug: arguments.HasFlag("--debug")))
+    
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
     <link href="css/output.css" rel="stylesheet" type="text/css"/>

@@ -11,6 +11,13 @@
         <IsPackable>True</IsPackable>
         <PackAsTool>True</PackAsTool>
 
+
+    </PropertyGroup>
+
+
+    <PropertyGroup>
+        <RazorhatProject>true</RazorhatProject>
+        <RazorhatTool>true</RazorhatTool>
     </PropertyGroup>
 
     <!-- Drip.UI.SourceGen.csproj (or your main RazorHAT consuming .csproj) -->
@@ -48,6 +55,7 @@
         <PackageReference Include="CodeMechanic.Diagnostics" Version="1.0.8"/>
         <PackageReference Include="CodeMechanic.Embeds" Version="1.0.5"/>
         <PackageReference Include="CodeMechanic.FileSystem" Version="2.0.12"/>
+        <PackageReference Include="CodeMechanic.Logging" Version="1.0.3"/>
         <PackageReference Include="CodeMechanic.Reflection" Version="1.0.6"/>
         <PackageReference Include="CodeMechanic.RegularExpressions" Version="1.0.11"/>
         <PackageReference Include="CodeMechanic.Shargs" Version="1.0.6"/>
@@ -91,7 +99,7 @@
 
     <!--     Toggle Submodule mode vs Nuget mode.-->
     <PropertyGroup>
-        <UseOnlySubmodules Condition="'$(UseOnlySubmodules)' == ''">false</UseOnlySubmodules>
+        <UseOnlySubmodules Condition="'$(UseOnlySubmodules)' == ''">true</UseOnlySubmodules>
     </PropertyGroup>
 
     <!--  NUGET-ONLY (more mature code)  Any nuget package in this item group will be used instead of the submodule of the same name!-->
@@ -102,12 +110,15 @@
     <!--  SUBMODULES-ONLY (less mature code)  Any submodule in this item group will be used instead of the Nuget Package of the same name!-->
     <ItemGroup Condition="'$(UseOnlySubmodules)' == 'true'">
         <ProjectReference Include="..\CodeMechanic.Razorhat\CodeMechanic.Razorhat.csproj"/>
-
     </ItemGroup>
 
-    <ItemGroup>
-        <!--        <None Include="wwwroot\components\ContentSidebar.html"/>-->
-    </ItemGroup>
+    <!--    <Import Project="..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets"-->
+    <!--            Condition="Exists('..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets')"/>-->
+
+    <Import Project="..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets"
+            Condition="'$(UseOnlySubmodules)' == 'true'
+                   And Exists('..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets')"/>
+
 
     <PropertyGroup>
         <!-- Let analyzers + code fixes see Content items (including .cshtml) as AdditionalFiles -->
@@ -117,15 +128,15 @@
     <ItemGroup>
 
         <!-- compiler analyzer -->
-<!--        <ProjectReference Include="..\CodeMechanic.Guards\CodeMechanic.Guards.csproj"-->
-<!--                          OutputItemType="Analyzer"-->
-<!--                          ReferenceOutputAssembly="false"-->
-<!--                          PrivateAssets="all"/>-->
+        <!--        <ProjectReference Include="..\CodeMechanic.Guards\CodeMechanic.Guards.csproj"-->
+        <!--                          OutputItemType="Analyzer"-->
+        <!--                          ReferenceOutputAssembly="false"-->
+        <!--                          PrivateAssets="all"/>-->
 
         <!-- IDE extension -->
         <!--        <ProjectReference Include="..\CodeMechanic.Guards.CodeFixes\CodeMechanic.Guards.CodeFixes.csproj"/>-->
 
-<!--        <ProjectReference Include="..\CodeMechanic.Guards.CodeFixes\CodeMechanic.Guards.CodeFixes.csproj"-->
+        <!--        <ProjectReference Include="..\CodeMechanic.Guards.CodeFixes\CodeMechanic.Guards.CodeFixes.csproj"-->
         <!--                          OutputItemType="Analyzer"-->
         <!--                          ReferenceOutputAssembly="false"-->
         <!--                          PrivateAssets="all"/>-->
