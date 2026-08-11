@@ -33,3 +33,23 @@ console.log(
 );
 console.log("Alpine version:", Alpine.version);
 console.log("site.js loaded! <3");
+
+// ✅ Correct for Anime.js v4 UMD
+// The global object is still 'anime', but the function is now 'animate'
+
+// Option A: If 'animate' is exposed globally (common in some UMD builds)
+if (typeof animate !== 'undefined') {
+    // animate('.box', {translateX: 250});
+    console.log("use 'animate()'")
+}
+// Option B: If only 'anime' object exists (most likely for v4 UMD)
+else if (typeof anime !== 'undefined') {
+    // In v4, the main function is 'animate' inside the 'anime' object
+    // anime.animate('.box', {translateX: 250});
+    console.log("use 'anime()'")
+} else {
+    console.error("Anime.js not loaded");
+}
+
+
+

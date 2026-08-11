@@ -26,11 +26,11 @@
     @inject ArgsMap arguments
 
     @Html.Raw(ImportMap.RenderAsScripts(debug: arguments.HasFlag("--debug")))
-    
+
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
 
-    <link href="css/output.css" rel="stylesheet" type="text/css"/>
-    <link href="css/temp_fixes.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/output.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/temp_fixes.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
@@ -73,7 +73,7 @@
                         <summary>Services</summary>
                         <ul class="p-2 bg-base-100 w-40 z-1">
                             <li><a>Consultations</a></li>
-                            <li><a>UX Design</a></li>
+                            <li><a href="/Showcase/AnimeJS">UX Design</a></li>
                         </ul>
                     </details>
                 </li>

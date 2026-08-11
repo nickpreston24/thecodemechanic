@@ -62,7 +62,7 @@
         <PackageReference Include="CodeMechanic.Types" Version="1.0.20"/>
         <PackageReference Include="CodeMechanic.MySql" Version="1.0.4"/>
         <PackageReference Include="Dapper" Version="2.1.66"/>
-        <PackageReference Include="Drip.UI" Version="1.0.2"/>
+        <!--        <PackageReference Include="Drip.UI" Version="1.0.3"/>-->
         <PackageReference Include="Htmx" Version="1.8.0"/>
         <PackageReference Include="Htmx.TagHelpers" Version="1.8.0"/>
         <PackageReference Include="Hydro" Version="1.3.0"/>
@@ -105,11 +105,13 @@
     <!--  NUGET-ONLY (more mature code)  Any nuget package in this item group will be used instead of the submodule of the same name!-->
     <ItemGroup Condition="'$(UseOnlySubmodules)' == 'false'">
         <PackageReference Include="CodeMechanic.Razorhat" Version="1.0.6"/>
+        <PackageReference Include="Drip.UI" Version="1.0.3"/>
     </ItemGroup>
 
     <!--  SUBMODULES-ONLY (less mature code)  Any submodule in this item group will be used instead of the Nuget Package of the same name!-->
     <ItemGroup Condition="'$(UseOnlySubmodules)' == 'true'">
         <ProjectReference Include="..\CodeMechanic.Razorhat\CodeMechanic.Razorhat.csproj"/>
+        <ProjectReference Include="..\Drip.UI\Drip.UI.csproj"/>
     </ItemGroup>
 
     <!--    <Import Project="..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets"-->
@@ -118,7 +120,6 @@
     <Import Project="..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets"
             Condition="'$(UseOnlySubmodules)' == 'true'
                    And Exists('..\CodeMechanic.Razorhat\build\CodeMechanic.Razorhat.targets')"/>
-
 
     <PropertyGroup>
         <!-- Let analyzers + code fixes see Content items (including .cshtml) as AdditionalFiles -->
