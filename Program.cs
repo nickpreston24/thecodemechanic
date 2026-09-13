@@ -60,6 +60,16 @@ internal class Program
         builder.Services.AddSingleton<Logger>(logger);
         builder.Services.AddSingleton<ImportMap>();
 
+        builder.Services.AddRazorPages(options =>
+        {
+            if (argsMap.HasCommand("admin"))
+                // Map the root path "/" to your specific page
+                options.Conventions.AddPageRoute("/Admin", "");
+
+            else
+                options.Conventions.AddPageRoute("/Index", ""); // your normal landing page
+        });
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
