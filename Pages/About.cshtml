@@ -11,16 +11,34 @@
     int import_count = ImportMap.Scripts.Count;
 }
 
-<div class="flex flex-col items-center gap-4">
+<div x-data class="flex flex-col items-center gap-4">
     <span x-edit="content.nick-test">this should work now</span>
 
 
-    @* <p x-edit="content.about_me">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam at *@
-    @*     ea laboriosam saepe voluptas! Animi architecto asperiores consectetur dicta id illo iusto nihil obcaecati rerum *@
-    @*     temporibus vero, voluptas voluptates?</p> *@
+    <p x-edit="content.about_me">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam at
+        ea laboriosam saepe voluptas! Animi architecto asperiores consectetur dicta id illo iusto nihil obcaecati rerum
+        temporibus vero, voluptas voluptates?</p>
 
-    @* <p class="pipes green-lightsaber" x-edit="content.cm-coconuts"></p> *@
+    @* <div class="border-2 grid mood" x-edit="images.mood-board-1" width="96px"/> *@
 
+    <div class="card">
+
+        <div class="card-body">
+
+            <h2>Mood board</h2>
+            <img x-edit="images.mood-board-1" width="96px"/>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2>Mood board (div)</h2>
+
+            <div x-edit="images.mood-board-1">
+
+            </div>
+        </div>
+    </div>
 
     <div class="stats shadow">
         <div class="stat">
@@ -28,5 +46,5 @@
             <div class="stat-value">@import_count</div>
         </div>
     </div>
-    
+
 </div>

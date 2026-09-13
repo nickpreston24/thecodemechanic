@@ -322,54 +322,89 @@ export default function createEditableStore({
          * Uses the `file` field, then writes the resulting public URL into `draft`
          * (and into the `url` field) so the preview and save stay in sync.
          */
-        async uploadFile(file) {
-            if (!this.isAdmin || !this.editingKey || !file) return;
+        async uploadFile(files) {
+            if (!this.isAdmin || !this.editingKey || !files?.length) return;
 
             const target = this.sourceStore || this;
             const key = this.editingKey;
 
             try {
-                // 1. Find or create the record
-                let record = await pb
-                    .collection(target.collection)
-                    .getFirstListItem(`key="${key}"`)
-                    .catch(() => null);
+                let record = await pb.collection(target.collection)
+                    .getFirstListItem(`key="${key}"`).catch(() => null);
 
-                if (!record) {
-                    record = await pb.collection(target.collection).create({
-                        key,
-                        // leave url empty for now; we'll fill it after the file lands
-                    });
-                }
+                if (!record)
+                    record = await pb.collection(target.collection).create({key});
 
-                // 2. Upload the file into the `file` field
                 const formData = new FormData();
-                formData.append("file", file);
+                [...files].forEach(file => formData.append("file", file));
 
-                const updated = await pb
-                    .collection(target.collection)
-                    .update(record.id, formData);
+                console.log("key:>>", key)
+                // const updated = await pb.collection(target.collection).update(record.id, formData);
 
-                // 3. Build the public URL PocketBase serves
-                //    (works for both images and videos)
-                const filename = updated.file;               // PB stores the filename here
-                const publicUrl = pb.files.getUrl(updated, filename);
+                // const urls = (Array.isArray(updated.file) ? updated.file : [updated.file])
+                //     .map(file => pb.files.getUrl(updated, file));
+                //
+                // this.draft = urls;
+                // target.items[key] = urls;
 
-                // 4. Keep everything in sync
-                this.draft = publicUrl;                      // live preview + textarea
-                target.items[key] = publicUrl;               // reactive store
+                // await pb.collection(target.collection).update(updated.id, {
+                //     url: urls
+                // });
 
-                // 5. Also persist the url field so future loads are correct
-                await pb.collection(target.collection).update(updated.id, {
-                    url: publicUrl,
-                });
-
-                console.log(`[${target.collection}] Uploaded file for ${key} → ${publicUrl}`);
+                console.log(`[${target.collection}] Uploaded ${urls.length} files for ${key}`);
             } catch (err) {
                 console.error("Upload failed", err);
                 alert("Upload failed — check console / PB file rules");
             }
         },
+        // async uploadFile(file) {
+        //     if (!this.isAdmin || !this.editingKey || !file) return;
+        //
+        //     const target = this.sourceStore || this;
+        //     const key = this.editingKey;
+        //
+        //     try {
+        //         // 1. Find or create the record
+        //         let record = await pb
+        //             .collection(target.collection)
+        //             .getFirstListItem(`key="${key}"`)
+        //             .catch(() => null);
+        //
+        //         if (!record) {
+        //             record = await pb.collection(target.collection).create({
+        //                 key,
+        //                 // leave url empty for now; we'll fill it after the file lands
+        //             });
+        //         }
+        //
+        //         // 2. Upload the file into the `file` field
+        //         const formData = new FormData();
+        //         formData.append("file", file);
+        //
+        //         const updated = await pb
+        //             .collection(target.collection)
+        //             .update(record.id, formData);
+        //
+        //         // 3. Build the public URL PocketBase serves
+        //         //    (works for both images and videos)
+        //         const filename = updated.file;               // PB stores the filename here
+        //         const publicUrl = pb.files.getUrl(updated, filename);
+        //
+        //         // 4. Keep everything in sync
+        //         this.draft = publicUrl;                      // live preview + textarea
+        //         target.items[key] = publicUrl;               // reactive store
+        //
+        //         // 5. Also persist the url field so future loads are correct
+        //         await pb.collection(target.collection).update(updated.id, {
+        //             url: publicUrl,
+        //         });
+        //
+        //         console.log(`[${target.collection}] Uploaded file for ${key} → ${publicUrl}`);
+        //     } catch (err) {
+        //         console.error("Upload failed", err);
+        //         alert("Upload failed — check console / PB file rules");
+        //     }
+        // },
 
         // Your modal calls .cancel() — keep both names
         cancel() {
