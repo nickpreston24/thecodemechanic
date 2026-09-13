@@ -63,8 +63,13 @@ export default function createEditableStore({
                 Object.keys(this.items).forEach((k) => delete this.items[k]);
 
                 for (const r of records) {
-                    this.items[r.key] = r[field];
+                    this.items[r.key] = field === "file"
+                        ? (Array.isArray(r.file) ? r.file : [r.file])
+                            .filter(Boolean)
+                            .map(file => pb.files.getURL(r, file))
+                        : r[field];
                 }
+
                 console.log(
                     `%c[${collection}] Loaded ${Object.keys(this.items).length} items`,
                     "color:#22c55e"
@@ -212,7 +217,17 @@ export default function createEditableStore({
 
             const target = this.sourceStore || this;          // the real store that owns the data
             const key = this.editingKey;
-            const value = typeof this.draft === "string" ? this.draft.trim() : this.draft;
+            // const value = typeof this.draft === "string" ? this.draft.trim() : this.draft;
+            // File-backed stores save through uploadFile(), not this generic path.
+            if (target.field === "file") {
+                this.modalOpen = false;
+                return;
+            }
+
+            const value = typeof this.draft === "string"
+                ? this.draft.trim()
+                : this.draft;
+            
             const coll = target.collection;
             const fld = target.field;
 
@@ -323,7 +338,8 @@ export default function createEditableStore({
          * (and into the `url` field) so the preview and save stay in sync.
          */
         async uploadFile(files) {
-            if (!this.isAdmin || !this.editingKey || !files?.length) return;
+            files = files instanceof File ? [files] : [...files];
+            if (!this.isAdmin || !this.editingKey || !files.length) return;
 
             const target = this.sourceStore || this;
             const key = this.editingKey;
@@ -336,27 +352,59 @@ export default function createEditableStore({
                     record = await pb.collection(target.collection).create({key});
 
                 const formData = new FormData();
-                [...files].forEach(file => formData.append("file", file));
+                files.forEach(file => formData.append("file", file));
 
-                console.log("key:>>", key)
-                // const updated = await pb.collection(target.collection).update(record.id, formData);
+                const updated = await pb.collection(target.collection)
+                    .update(record.id, formData);
 
-                // const urls = (Array.isArray(updated.file) ? updated.file : [updated.file])
-                //     .map(file => pb.files.getUrl(updated, file));
-                //
-                // this.draft = urls;
-                // target.items[key] = urls;
+                const urls = (Array.isArray(updated.file) ? updated.file : [updated.file])
+                    .filter(Boolean)
+                    .map(file => pb.files.getUrl(updated, file));
 
-                // await pb.collection(target.collection).update(updated.id, {
-                //     url: urls
-                // });
+                this.draft = urls;
+                target.items[key] = urls;
 
                 console.log(`[${target.collection}] Uploaded ${urls.length} files for ${key}`);
             } catch (err) {
-                console.error("Upload failed", err);
-                alert("Upload failed — check console / PB file rules");
+                console.error("[x-edit] Upload failed:", err);
+                alert("Upload failed — check console");
             }
         },
+        // async uploadFile(files) {
+        //     console.log("uploadFile()")
+        //     if (!this.isAdmin || !this.editingKey || !files?.length) return;
+        //
+        //     const target = this.sourceStore || this;
+        //     console.log("uploadFile() > target :>> ", target)
+        //
+        //     const key = this.editingKey;
+        //     console.log("uploadFile() > key :>> ", key)
+        //
+        //     try {
+        //         let record = await pb.collection(target.collection)
+        //             .getFirstListItem(`key="${key}"`).catch(() => null);
+        //
+        //         if (!record)
+        //             record = await pb.collection(target.collection).create({key});
+        //
+        //         const formData = new FormData();
+        //         [...files].forEach(file => formData.append("file", file));
+        //
+        //         const updated = await pb.collection(target.collection)
+        //             .update(record.id, formData);
+        //
+        //         const urls = (Array.isArray(updated.file) ? updated.file : [updated.file])
+        //             .map(file => pb.files.getURL(updated, file));
+        //
+        //         this.draft = urls;
+        //         target.items[key] = urls;
+        //
+        //         console.log(`[${target.collection}] Uploaded ${urls.length} files for ${key}`);
+        //     } catch (err) {
+        //         console.error("Upload failed", err);
+        //         alert("Upload failed — check console / PB file rules");
+        //     }
+        // },
         // async uploadFile(file) {
         //     if (!this.isAdmin || !this.editingKey || !file) return;
         //
@@ -388,7 +436,7 @@ export default function createEditableStore({
         //         // 3. Build the public URL PocketBase serves
         //         //    (works for both images and videos)
         //         const filename = updated.file;               // PB stores the filename here
-        //         const publicUrl = pb.files.getUrl(updated, filename);
+        //         const publicUrl = pb.files.getURL(updated, filename);
         //
         //         // 4. Keep everything in sync
         //         this.draft = publicUrl;                      // live preview + textarea
