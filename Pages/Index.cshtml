@@ -4,14 +4,11 @@
   ViewData["Title"] = "Home page";
 }
 
-
-<partial name="_UnderConstruction"/>
-
-
-<template x-if="false">
+<div>
 
   <div x-data class="bg-space-black text-star">
     <!-- HERO + NAVBAR OVERLAY -->
+
     <section class="relative min-h-[100dvh] flex flex-col overflow-hidden">
       <!-- Video Background -->
       @* <video *@
@@ -43,7 +40,7 @@
         <div class="px-6 max-w-5xl mx-auto text-center">
           <div class="stack gap-4 mb-8">
             <img
-              x-edit="images.foo-bar"
+              x-edit="images.foo-bar2"
               class="lg:w-md"
               src="https://picsum.photos/seed/picsum/200/300"
               alt="CodeMechanic"
@@ -55,6 +52,7 @@
             <p x-edit="content.cm-choco"></p>
 
             <b x-edit="content.crack-sparrow">Captain crack sparrow!</b>
+
 
             <div
               class="flex flex-col items-center sm:flex-row gap-4 justify-center mt-6"
@@ -115,7 +113,7 @@
 
   </div>
 
-</template>
+</div>
 
 @* <hero> *@
 @*     <h1 class="text-3xl">Welcome to my website!</h1> *@
