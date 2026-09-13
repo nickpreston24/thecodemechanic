@@ -1,3 +1,5 @@
+nupkg/
+
 .cm/
 *.user
 *.log
