@@ -125,9 +125,7 @@
         <!--        <AdditionalFileItemNames>$(AdditionalFileItemNames);Content</AdditionalFileItemNames>-->
     </PropertyGroup>
 
-    <ItemGroup>
-
-        <!-- compiler analyzer -->
+    <ItemGroup><!-- compiler analyzer -->
         <!--        <ProjectReference Include="..\CodeMechanic.Guards\CodeMechanic.Guards.csproj"-->
         <!--                          OutputItemType="Analyzer"-->
         <!--                          ReferenceOutputAssembly="false"-->
@@ -140,6 +138,7 @@
         <!--                          OutputItemType="Analyzer"-->
         <!--                          ReferenceOutputAssembly="false"-->
         <!--                          PrivateAssets="all"/>-->
+
 
     </ItemGroup>
 
