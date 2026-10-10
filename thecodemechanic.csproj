@@ -142,4 +142,9 @@
 
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\js\stores\legacy\content-store.legacy.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\stores\legacy\editable-store.legacy.js" />
+    </ItemGroup>
+
 </Project>
